@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-dark-950 text-slate-100 antialiased font-sans selection:bg-emerald-500/25 selection:text-emerald-300;
+    @apply bg-[#F7F8FC] text-[#252936] antialiased font-sans selection:bg-[#6C63FF]/20 selection:text-[#6C63FF];
   }
 }
 
@@ -15,14 +15,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0a0c0e;
+  background: #F7F8FC;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #252b35;
+  background: #E5E7EB;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #363e4c;
+  background: #D1D5DB;
 }

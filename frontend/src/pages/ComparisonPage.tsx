@@ -21,7 +21,7 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
 
   if (!comparison) {
     return (
-      <div className="h-96 flex items-center justify-center text-slate-400 text-sm">
+      <div className="h-96 flex items-center justify-center text-[#6B7280] text-sm">
         Loading model comparison data from backend...
       </div>
     );
@@ -124,34 +124,34 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
     <div className="space-y-8 animate-fadeIn max-w-5xl">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">
+        <div className="flex items-center gap-2 text-[#6C63FF] text-xs font-bold uppercase tracking-wider mb-1">
           <BarChart3 className="w-4 h-4" />
           Empirical Evaluation & Comparative Proof
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#252936] tracking-tight">
           Baseline Models vs Asymmetric Cost Model
         </h2>
-        <p className="text-sm text-slate-300 max-w-3xl mt-1.5 leading-relaxed">
+        <p className="text-sm text-[#6B7280] max-w-3xl mt-1.5 leading-relaxed">
           OLS, Ridge, Huber, Random Forest, SVR vs. the proposed asymmetric cost model &mdash; 449 held-out test records, chronological split, zero data leakage.
         </p>
       </div>
 
       {/* Research Finding Banner */}
-      <div className="p-5 bg-dark-900 border border-emerald-500/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xl">
+      <div className="p-5 bg-white border border-[#6C63FF]/30 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
         <div className="flex items-start gap-3.5">
-          <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 shrink-0">
+          <div className="p-2.5 rounded-xl bg-[#6C63FF]/10 border border-[#6C63FF]/25 text-[#6C63FF] shrink-0">
             <ShieldCheck className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wide">Empirical Research Finding</h3>
-            <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+            <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wide">Empirical Research Finding</h3>
+            <p className="text-xs text-[#6B7280] mt-1 leading-relaxed">
               SLA violations: {base.sla_violation_rate.toFixed(1)}% (OLS) vs {asym.sla_violation_rate.toFixed(1)}% (Asymmetric) &mdash; a {summary.sla_violation_reduction_percent}% reduction with +{summary.wastage_delta} wastage index.
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-2 shrink-0 self-end sm:self-center">
-          <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+          <span className="text-xs font-mono font-bold px-3 py-1.5 rounded-xl bg-[#6C63FF]/10 border border-[#6C63FF]/25 text-[#6C63FF]">
             {summary.sla_violation_reduction_percent}% SLA Violation Cut
           </span>
         </div>
@@ -163,9 +163,9 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
       </div>
 
       {/* Side-by-Side Detailed Comparison Table */}
-      <div className="bg-dark-900 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
+      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
         <div>
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+          <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
             Detailed Statistical & Operational Metrics Breakdown
           </h3>
         </div>
@@ -173,34 +173,34 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-dark-700 text-slate-400">
+              <tr className="border-b border-[#E5E7EB] text-[#6B7280]">
                 <th className="pb-3 font-semibold w-2/5">Metric / Evaluation Dimension</th>
                 <th className="pb-3 font-semibold text-center w-1/5">Baseline OLS (MSE)</th>
                 <th className="pb-3 font-semibold text-center w-1/5">Asymmetric Cost Model</th>
                 <th className="pb-3 font-semibold text-right w-1/5">Impact (Δ)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-dark-700/60 font-mono">
+            <tbody className="divide-y divide-[#E5E7EB] font-mono">
               {rows.map((row) => (
                 <tr
                   key={row.label}
-                  className={`hover:bg-dark-850/50 transition-colors ${
-                    row.critical ? 'bg-dark-850/30' : ''
+                  className={`hover:bg-[#F7F8FC] transition-colors ${
+                    row.critical ? 'bg-[#F9FAFB]' : ''
                   }`}
                 >
                   <td className="py-3 font-sans">
-                    <div className="font-semibold text-slate-200">{row.label}</div>
+                    <div className="font-semibold text-[#252936]">{row.label}</div>
                   </td>
-                  <td className="py-3 text-center text-slate-300 font-bold">{row.baseVal}</td>
-                  <td className="py-3 text-center font-bold text-emerald-400">{row.asymVal}</td>
+                  <td className="py-3 text-center text-[#6B7280] font-bold">{row.baseVal}</td>
+                  <td className="py-3 text-center font-bold text-[#6C63FF]">{row.asymVal}</td>
                   <td className="py-3 text-right">
                     <span
                       className={`inline-flex items-center gap-1 font-bold px-2 py-0.5 rounded text-[11px] ${
                         row.critical
-                          ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                          ? 'bg-[#6C63FF]/10 text-[#6C63FF] border border-[#6C63FF]/25'
                           : row.favorable
-                          ? 'bg-emerald-500/10 text-emerald-400'
-                          : 'bg-amber-500/10 text-amber-400'
+                          ? 'bg-[#6C63FF]/10 text-[#6C63FF]'
+                          : 'bg-[#E7A83B]/10 text-[#E7A83B]'
                       }`}
                     >
                       {row.delta}
@@ -214,9 +214,9 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
       </div>
 
       {/* Feature Weights Comparison */}
-      <div className="bg-dark-900 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
-        <div className="flex items-center gap-2 text-white font-bold text-sm uppercase tracking-wider">
-          <Layers className="w-4 h-4 text-emerald-400" />
+      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
+        <div className="flex items-center gap-2 text-[#252936] font-bold text-sm uppercase tracking-wider">
+          <Layers className="w-4 h-4 text-[#6C63FF]" />
           Learned Multivariable Regression Weights (w_j)
         </div>
 
@@ -225,14 +225,14 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
             const bw = base.weights?.[i] ?? 0;
             const aw = asym.weights?.[i] ?? 0;
             return (
-              <div key={name} className="p-3 bg-dark-950 border border-dark-700 rounded-xl space-y-2">
-                <span className="text-xs font-semibold text-slate-300 block truncate">{name}</span>
+              <div key={name} className="p-3 bg-[#F7F8FC] border border-[#E5E7EB] rounded-xl space-y-2">
+                <span className="text-xs font-semibold text-[#252936] block truncate">{name}</span>
                 <div className="text-[11px] space-y-1 font-mono">
-                  <div className="flex justify-between text-slate-400">
+                  <div className="flex justify-between text-[#6B7280]">
                     <span>OLS:</span>
                     <span>{bw.toFixed(4)}</span>
                   </div>
-                  <div className="flex justify-between text-emerald-400 font-bold">
+                  <div className="flex justify-between text-[#6C63FF] font-bold">
                     <span>Asym:</span>
                     <span>{aw.toFixed(4)}</span>
                   </div>
@@ -244,30 +244,30 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
       </div>
 
       {/* Engineering Trade-Off Analysis */}
-      <div className="bg-dark-900 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-          <Scale className="w-4 h-4 text-amber-400" />
+      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
+        <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider flex items-center gap-2">
+          <Scale className="w-4 h-4 text-[#E7A83B]" />
           Engineering Trade-Off Analysis
         </h3>
-        <div className="text-xs text-slate-300 leading-relaxed">
+        <div className="text-xs text-[#6B7280] leading-relaxed">
           <p>
-            R&sup2; = <strong>{asym.r2.toFixed(4)}</strong>, SLA violations: <strong>{base.sla_violation_rate.toFixed(1)}%</strong> &rarr; <strong>{asym.sla_violation_rate.toFixed(1)}%</strong>, resource wastage index: <strong>{asym.resource_wastage_index.toFixed(3)}</strong>.
+            R&sup2; = <strong className="text-[#252936]">{asym.r2.toFixed(4)}</strong>, SLA violations: <strong className="text-[#252936]">{base.sla_violation_rate.toFixed(1)}%</strong> &rarr; <strong className="text-[#6C63FF]">{asym.sla_violation_rate.toFixed(1)}%</strong>, resource wastage index: <strong className="text-[#252936]">{asym.resource_wastage_index.toFixed(3)}</strong>.
           </p>
         </div>
       </div>
 
       {/* 6-Model Benchmark: SLA Violation vs Resource Allocation */}
-      <div className="bg-dark-900 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-dark-700">
+      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-[#E5E7EB]">
           <div>
-            <div className="flex items-center gap-2 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-[#6C63FF] text-xs font-bold uppercase tracking-wider mb-1">
               <Award className="w-4 h-4" />
               6-Model Empirical Benchmark
             </div>
-            <h3 className="text-base sm:text-lg font-bold text-white tracking-tight">
+            <h3 className="text-base sm:text-lg font-bold text-[#252936] tracking-tight">
               6-Model Benchmark: SLA Violation vs Resource Allocation
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-[#6B7280] mt-0.5">
               Ranked worst-to-best by SLA violation rate ({base.total_samples} test samples)
             </p>
           </div>
@@ -275,16 +275,16 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
           <button
             type="button"
             onClick={() => setShowStatsDetails(!showStatsDetails)}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-dark-800 hover:bg-dark-750 text-slate-300 hover:text-white text-xs font-medium border border-dark-700 transition-colors self-start sm:self-center cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-[#F9FAFB] hover:bg-[#F3F4F6] text-[#252936] hover:text-[#252936] text-xs font-medium border border-[#E5E7EB] transition-colors self-start sm:self-center cursor-pointer"
           >
             {showStatsDetails ? (
               <>
-                <ChevronUp className="w-3.5 h-3.5 text-emerald-400" />
+                <ChevronUp className="w-3.5 h-3.5 text-[#6C63FF]" />
                 <span>Hide MSE/RMSE/R² Details</span>
               </>
             ) : (
               <>
-                <ChevronDown className="w-3.5 h-3.5 text-emerald-400" />
+                <ChevronDown className="w-3.5 h-3.5 text-[#6C63FF]" />
                 <span>Show MSE/RMSE/R² Details</span>
               </>
             )}
@@ -294,7 +294,7 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-dark-700 text-slate-400">
+              <tr className="border-b border-[#E5E7EB] text-[#6B7280]">
                 <th className="pb-3 font-semibold">Rank & Model Architecture</th>
                 <th className="pb-3 font-semibold text-center">Loss Type</th>
                 <th className="pb-3 font-semibold text-center">SLA Violation Rate</th>
@@ -302,14 +302,14 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
                 <th className="pb-3 font-semibold text-right">Asymmetric Advantage</th>
                 {showStatsDetails && (
                   <>
-                    <th className="pb-3 font-semibold text-center text-slate-400">R² Score</th>
-                    <th className="pb-3 font-semibold text-center text-slate-400">RMSE</th>
-                    <th className="pb-3 font-semibold text-center text-slate-400">MSE</th>
+                    <th className="pb-3 font-semibold text-center text-[#6B7280]">R² Score</th>
+                    <th className="pb-3 font-semibold text-center text-[#6B7280]">RMSE</th>
+                    <th className="pb-3 font-semibold text-center text-[#6B7280]">MSE</th>
                   </>
                 )}
               </tr>
             </thead>
-            <tbody className="divide-y divide-dark-700/60 font-mono">
+            <tbody className="divide-y divide-[#E5E7EB] font-mono">
               {modelsList.map((m, idx) => {
                 if (!m) return null;
                 const isAsym = m.model_type === 'asymmetric';
@@ -324,20 +324,20 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
                     key={m.model_type || idx}
                     className={`transition-colors ${
                       isAsym
-                        ? 'bg-emerald-500/10 border-l-4 border-emerald-400 text-slate-100 font-semibold'
-                        : 'hover:bg-dark-850/50'
+                        ? 'bg-[#8B85FF]/10 border-l-4 border-[#6C63FF] text-[#252936] font-semibold'
+                        : 'hover:bg-[#F7F8FC]'
                     }`}
                   >
                     <td className="py-3.5 px-3 font-sans">
                       <div className="flex items-center gap-2.5">
-                        <span className="text-[11px] font-mono text-slate-400 w-5">
+                        <span className="text-[11px] font-mono text-[#6B7280] w-5">
                           #{idx + 1}
                         </span>
                         <div>
-                          <div className="font-bold text-slate-200 flex items-center gap-2">
+                          <div className="font-bold text-[#252936] flex items-center gap-2">
                             <span>{m.model_name || m.model_type}</span>
                             {isAsym && (
-                              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+                              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-full bg-[#6C63FF]/15 text-[#6C63FF] border border-[#6C63FF]/30 font-bold">
                                 ★ Our Model
                               </span>
                             )}
@@ -350,8 +350,8 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
                       <span
                         className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-semibold border ${
                           isAsym
-                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                            : 'bg-slate-800 text-slate-300 border-slate-700'
+                            ? 'bg-[#6C63FF]/15 text-[#6C63FF] border border-[#6C63FF]/30'
+                            : 'bg-[#F3F4F6] text-[#6B7280] border border-[#E5E7EB]'
                         }`}
                       >
                         {isAsym ? 'Asymmetric' : 'Symmetric'}
@@ -362,30 +362,30 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
                       <span
                         className={`inline-block px-2.5 py-1 rounded-lg font-bold text-xs ${
                           isAsym
-                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                            ? 'bg-[#6C63FF]/15 text-[#6C63FF] border border-[#6C63FF]/30'
                             : sla > 60
-                            ? 'bg-rose-500/15 text-rose-300 border border-rose-500/25'
+                            ? 'bg-[#E76F6F]/15 text-[#E76F6F] border border-[#E76F6F]/25'
                             : sla > 45
-                            ? 'bg-amber-500/15 text-amber-300 border border-amber-500/25'
-                            : 'bg-dark-800 text-slate-300'
+                            ? 'bg-[#E7A83B]/15 text-[#E7A83B] border border-[#E7A83B]/25'
+                            : 'bg-[#F3F4F6] text-[#6B7280]'
                         }`}
                       >
                         {sla.toFixed(2)}%
                       </span>
                     </td>
 
-                    <td className="py-3.5 px-2 text-center text-slate-300 font-bold">
+                    <td className="py-3.5 px-2 text-center text-[#6B7280] font-bold">
                       {m.resource_wastage_index.toFixed(4)}
                     </td>
 
                     <td className="py-3.5 px-3 text-right">
                       {isAsym ? (
-                        <span className="inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg text-[11px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                        <span className="inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg text-[11px] bg-[#6C63FF]/15 text-[#6C63FF] border border-[#6C63FF]/30">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           Top SLA Guard (Leader)
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="inline-flex items-center gap-1 font-bold px-2.5 py-1 rounded-lg text-[11px] bg-[#6C63FF]/10 text-[#6C63FF] border border-[#6C63FF]/20">
                           +{advantage.toFixed(1)}% Violation Cut
                         </span>
                       )}
@@ -393,13 +393,13 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
 
                     {showStatsDetails && (
                       <>
-                        <td className="py-3.5 px-2 text-center text-slate-300">
+                        <td className="py-3.5 px-2 text-center text-[#252936]">
                           {m.r2.toFixed(4)}
                         </td>
-                        <td className="py-3.5 px-2 text-center text-slate-400">
+                        <td className="py-3.5 px-2 text-center text-[#6B7280]">
                           {m.rmse.toFixed(4)}
                         </td>
-                        <td className="py-3.5 px-2 text-center text-slate-400">
+                        <td className="py-3.5 px-2 text-center text-[#6B7280]">
                           {m.mse.toFixed(4)}
                         </td>
                       </>

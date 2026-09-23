@@ -55,7 +55,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-dark-950 text-slate-100 selection:bg-emerald-500/20 selection:text-emerald-300">
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#F7F8FC] text-[#252936] selection:bg-[#6C63FF]/20 selection:text-[#6C63FF]">
       {/* Fixed Left Sidebar Navigation */}
       <Sidebar
         activeTab={activeTab}
@@ -76,7 +76,7 @@ const App: React.FC = () => {
       <div className="flex-1 md:ml-64 flex flex-col min-w-0">
         {initError && (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 w-full">
-            <div className="p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-300 text-xs flex items-center justify-between gap-3">
+            <div className="p-4 bg-[#E76F6F]/10 border border-[#E76F6F]/30 rounded-xl text-[#E76F6F] text-xs flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>
@@ -85,7 +85,7 @@ const App: React.FC = () => {
               </div>
               <button
                 onClick={loadData}
-                className="px-3 py-1 rounded bg-rose-500/20 hover:bg-rose-500/30 font-semibold text-[11px] shrink-0"
+                className="px-3 py-1 rounded bg-[#E76F6F]/20 hover:bg-[#E76F6F]/30 font-semibold text-[11px] shrink-0"
               >
                 Retry Connection
               </button>
@@ -114,12 +114,12 @@ const App: React.FC = () => {
         </main>
 
         {/* Global Footer */}
-        <footer className="border-t border-dark-700/60 bg-dark-900/60 py-5 text-center text-xs text-slate-400">
+        <footer className="border-t border-[#E5E7EB] bg-white py-5 text-center text-xs text-[#6B7280]">
           <div className="max-w-6xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
             <span>
               Academic ML Prototype — Asymmetric Cost Multivariable Regression
             </span>
-            <span className="font-mono text-[11px] text-slate-400">
+            <span className="font-mono text-[11px] text-[#6B7280]">
               α=1.0 • β=0.70 • γ=0.5 • Chronological Leak-Free Validation
             </span>
           </div>

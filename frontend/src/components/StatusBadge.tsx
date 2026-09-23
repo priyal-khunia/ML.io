@@ -14,22 +14,22 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ action, size = 'md', s
 
   switch (action) {
     case 'SCALE_UP':
-      colorClasses = 'bg-rose-500/15 text-rose-300 border-rose-500/30';
+      colorClasses = 'bg-[#E76F6F]/15 text-[#E76F6F] border-[#E76F6F]/30';
       Icon = ArrowUpRight;
       label = 'SCALE UP';
       break;
     case 'SCALE_DOWN':
-      colorClasses = 'bg-sky-500/15 text-sky-300 border-sky-500/30';
+      colorClasses = 'bg-[#5B9CF6]/15 text-[#5B9CF6] border-[#5B9CF6]/30';
       Icon = ArrowDownRight;
       label = 'SCALE DOWN';
       break;
     case 'MAINTAIN':
-      colorClasses = 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30';
+      colorClasses = 'bg-[#35B99A]/15 text-[#35B99A] border-[#35B99A]/30';
       Icon = CheckCircle2;
       label = 'MAINTAIN';
       break;
     default:
-      colorClasses = 'bg-slate-800 text-slate-300 border-slate-700';
+      colorClasses = 'bg-[#E7A83B]/15 text-[#E7A83B] border-[#E7A83B]/30';
       Icon = AlertTriangle;
       label = action;
   }
