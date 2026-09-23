@@ -129,10 +129,10 @@ export const ComparisonPage: React.FC<ComparisonPageProps> = ({ comparison }) =>
           Empirical Evaluation & Comparative Proof
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-          Baseline OLS Regression vs Asymmetric Cost Model
+          Baseline Models vs Asymmetric Cost Model
         </h2>
         <p className="text-sm text-slate-300 max-w-3xl mt-1.5 leading-relaxed">
-          449 held-out test records, chronological split, zero data leakage.
+          OLS, Ridge, Huber, Random Forest, SVR vs. the proposed asymmetric cost model &mdash; 449 held-out test records, chronological split, zero data leakage.
         </p>
       </div>
 

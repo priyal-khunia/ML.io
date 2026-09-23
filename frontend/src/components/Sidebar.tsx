@@ -43,7 +43,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     {
       id: 'comparison',
       label: 'Model Comparison',
-      desc: 'OLS vs Asymmetric empirical proof',
+      desc: 'Baseline Models vs Asymmetric',
       icon: BarChart3,
     },
     {
