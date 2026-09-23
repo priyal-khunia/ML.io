@@ -12,8 +12,11 @@ export interface ModelMetrics {
   total_samples: number;
   model_name?: string;
   model_type?: string;
+  loss_type?: 'symmetric' | 'asymmetric' | string;
+  asymmetric_advantage_percent?: number;
   weights?: number[];
   intercept?: number;
+  feature_importances?: number[];
   alpha?: number;
   beta?: number;
   gamma?: number;
@@ -31,6 +34,12 @@ export interface TrainingLossPoint {
 export interface ComparisonResponse {
   baseline: ModelMetrics;
   asymmetric: ModelMetrics;
+  ridge?: ModelMetrics;
+  huber?: ModelMetrics;
+  random_forest?: ModelMetrics;
+  svr?: ModelMetrics;
+  all_models?: ModelMetrics[];
+  ranked_models?: ModelMetrics[];
   comparison_summary: {
     sla_violation_reduction_points: number;
     sla_violation_reduction_percent: number;

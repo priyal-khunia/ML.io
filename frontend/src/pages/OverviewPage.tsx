@@ -77,8 +77,7 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
               Asymmetric Cost-Weighted Multivariable Regression
             </h2>
             <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-              Standard OLS models treat under-provisioning (catastrophic SLA breach) equally with over-provisioning (minor cloud dollar waste).
-              Our asymmetric gradient descent penalizes SLA deficits exponentially, guaranteeing dependable 5-minute capacity foresight.
+              Asymmetric gradient descent penalizing SLA deficits exponentially for proactive 5-minute capacity forecasting.
             </p>
           </div>
 
@@ -223,9 +222,6 @@ export const OverviewPage: React.FC<OverviewPageProps> = ({
             <h4 className="text-sm font-bold text-white uppercase tracking-wider">
               Recent Prediction & Scaling History (SQLite)
             </h4>
-            <p className="text-xs text-slate-400">
-              Persistent log of incoming server workloads, forecasts, and automated recommendations
-            </p>
           </div>
           <div className="flex items-center gap-3">
             {recentLogs.length > 0 && (

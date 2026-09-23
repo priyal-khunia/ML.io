@@ -4,11 +4,7 @@ import {
   CheckCircle2,
   FileSpreadsheet,
   Layers,
-  Split,
-  Search,
-  Filter,
   PlusCircle,
-  Sparkles,
 } from 'lucide-react';
 import { DatasetSummary } from '../types/api';
 import { fetchDatasetSummary, addDatasetRow } from '../services/api';
@@ -17,7 +13,6 @@ export const DatasetPage: React.FC = () => {
   const [summary, setSummary] = useState<DatasetSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [filterText, setFilterText] = useState('');
   
   // Add new observation form state
   const [newRow, setNewRow] = useState({
@@ -99,9 +94,8 @@ export const DatasetPage: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
           Dataset Characteristics & Preprocessing Pipeline
         </h2>
-        <p className="text-sm text-dark-300 max-w-3xl mt-1">
-          Analysis of the <strong>cloud_resource_dataset.csv</strong> dataset.
-          The target metric represents derived resource requirements based on next 5-minute cluster observations.
+        <p className="text-sm text-slate-300 max-w-3xl mt-1">
+          cloud_resource_dataset.csv &mdash; 5 telemetry features, 5-min-ahead target.
         </p>
       </div>
 
@@ -139,7 +133,7 @@ export const DatasetPage: React.FC = () => {
             {summary.train_records.toLocaleString()}
           </span>
           <span className="text-[11px] text-dark-400 mt-1 block">
-            Earliest chronological
+            Chronological
           </span>
         </div>
 
@@ -151,12 +145,12 @@ export const DatasetPage: React.FC = () => {
             {summary.test_records.toLocaleString()}
           </span>
           <span className="text-[11px] text-dark-400 mt-1 block">
-            Latest holdout (0% leak)
+            Holdout partition
           </span>
         </div>
       </div>
 
-      {/* Feature Definitions & Preprocessing Audit */}
+      {/* Feature Distributions & Preprocessing Audit */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-dark-900/90 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
           <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -215,28 +209,28 @@ export const DatasetPage: React.FC = () => {
           </h3>
 
           <ul className="space-y-3 text-xs text-dark-300">
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>Zero Missing Values:</strong> Dataset was validated for nulls and NaNs; all {summary.total_records.toLocaleString()} rows are complete.
+                <strong className="text-slate-200">Zero Missing Values</strong> ({summary.total_records.toLocaleString()} rows)
               </span>
             </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>Zero Duplicate Rows:</strong> Full integrity check confirmed 0 duplicate records.
+                <strong className="text-slate-200">Zero Duplicate Rows</strong>
               </span>
             </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>Strict Chronological Split:</strong> 80% earliest records ({summary.train_records.toLocaleString()}) used for training; 20% latest records ({summary.test_records.toLocaleString()}) reserved for testing. Avoids lookahead bias.
+                <strong className="text-slate-200">Chronological Split:</strong> 80% Train ({summary.train_records.toLocaleString()}) / 20% Test ({summary.test_records.toLocaleString()})
               </span>
             </li>
-            <li className="flex items-start gap-2">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <li className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
               <span>
-                <strong>StandardScaler Fitted Only on Train:</strong> Means and variances computed strictly from training partition to eliminate leakage.
+                <strong className="text-slate-200">StandardScaler:</strong> Fitted strictly on train set
               </span>
             </li>
           </ul>
@@ -249,7 +243,7 @@ export const DatasetPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <PlusCircle className="w-4 h-4 text-emerald-400" />
             <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-              Add New Telemetry Observation to Dataset
+              Add New Telemetry Observation
             </h3>
           </div>
           {addMsg && (
@@ -258,9 +252,6 @@ export const DatasetPage: React.FC = () => {
             </span>
           )}
         </div>
-        <p className="text-xs text-dark-400">
-          Directly insert new cluster telemetry observations to expand the training dataset.
-        </p>
 
         <form onSubmit={handleAddRow} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
           <div>
@@ -343,15 +334,10 @@ export const DatasetPage: React.FC = () => {
       {/* Dataset Preview Table */}
       <div className="bg-dark-900/90 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
-              <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
-              Dataset Observation Preview (Top Records)
-            </h3>
-            <p className="text-xs text-dark-400">
-              Raw telemetry features and derived target values
-            </p>
-          </div>
+          <h3 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <FileSpreadsheet className="w-4 h-4 text-emerald-400" />
+            Dataset Observation Preview
+          </h3>
           <span className="text-xs font-mono text-dark-400">Showing 15 rows</span>
         </div>
 

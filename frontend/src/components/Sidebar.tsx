@@ -6,7 +6,6 @@ import {
   BarChart3,
   BrainCircuit,
   Database,
-  BookOpen,
   Menu,
   X,
 } from 'lucide-react';
@@ -58,12 +57,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Dataset Explorer',
       desc: 'Cluster telemetry & features',
       icon: Database,
-    },
-    {
-      id: 'theory',
-      label: 'Academic Theory & Math',
-      desc: 'Formulations, curves & derivations',
-      icon: BookOpen,
     },
   ];
 

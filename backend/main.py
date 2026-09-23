@@ -104,7 +104,9 @@ def get_metrics():
         manager.initialize_and_train_all()
     return {
         "asymmetric_model": manager.asymmetric_metrics,
-        "baseline_model": manager.baseline_metrics
+        "baseline_model": manager.baseline_metrics,
+        "comparison_models": manager.comparison_models_metrics,
+        "ranked_models": manager.get_comparison_summary().get("ranked_models", [])
     }
 
 @app.get("/comparison")

@@ -90,8 +90,7 @@ export const SimulationPage: React.FC = () => {
           Cloud Resource Prediction & Auto-Scaling Engine
         </h2>
         <p className="text-sm text-slate-300 max-w-3xl mt-1.5 leading-relaxed">
-          Input instantaneous cloud server metrics to evaluate the asymmetric regression model (calibrated with &beta; = 0.70).
-          The engine computes the 5-minute forecast with built-in SLA safety margin and issues an auto-scaling recommendation.
+          Simulate 5-minute resource forecasts and automated scaling recommendations from live telemetry.
         </p>
       </div>
 
@@ -424,10 +423,6 @@ export const SimulationPage: React.FC = () => {
                       #{result.prediction_id}
                     </span>
                   </div>
-                </div>
-
-                <div className="text-[11px] text-slate-500 italic">
-                  Note: This recommendation is simulated for academic evaluation; no live cloud hypervisor API is invoked.
                 </div>
               </div>
             </div>

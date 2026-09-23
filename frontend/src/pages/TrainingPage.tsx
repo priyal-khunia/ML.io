@@ -83,9 +83,8 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
         <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
           Custom Gradient Descent Training Lab
         </h2>
-        <p className="text-sm text-dark-300 max-w-3xl mt-1">
-          Configure the hyperparameters of the exponential-linear asymmetric cost function.
-          Training executes custom NumPy gradient descent on the chronological training split (1,793 samples).
+        <p className="text-sm text-slate-300 max-w-3xl mt-1">
+          Configure cost hyperparameters and run gradient descent optimization across 1,793 chronological training samples.
         </p>
       </div>
 
@@ -261,17 +260,9 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
         <div className="lg:col-span-7 space-y-6">
           <div className="bg-dark-900/90 border border-dark-700 rounded-2xl p-6 shadow-xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-dark-700">
-              <div>
-                <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-                  Empirical Training Loss Trajectory
-                </h3>
-                <p className="text-xs text-dark-400">
-                  Analytical gradient descent convergence over {lossHistory.length > 0 ? lossHistory[lossHistory.length - 1].epoch : params.epochs} iterations
-                </p>
-              </div>
-              <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-                NumPy Optimization
-              </span>
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                Empirical Training Loss Trajectory
+              </h3>
             </div>
 
             <LossChart data={lossHistory} />

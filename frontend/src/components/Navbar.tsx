@@ -6,7 +6,6 @@ import {
   BarChart3,
   BrainCircuit,
   Database,
-  BookOpen,
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
@@ -30,7 +29,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     { id: 'comparison', label: 'Model Comparison', icon: BarChart3 },
     { id: 'training', label: 'Gradient Descent Lab', icon: BrainCircuit },
     { id: 'dataset', label: 'Dataset Explorer', icon: Database },
-    { id: 'theory', label: 'Academic Theory & Math', icon: BookOpen },
   ];
 
   return (

@@ -4,6 +4,12 @@ import os
 from backend.ml.preprocessing import DataProcessor
 from backend.ml.baseline_model import BaselineLinearRegressionModel
 from backend.ml.asymmetric_model import AsymmetricCostRegressionModel
+from backend.ml.comparison_models import (
+    RidgeRegressionModel,
+    HuberRegressionModel,
+    RandomForestRegressionModel,
+    SVRRegressionModel,
+)
 from backend.ml.metrics import compute_all_metrics
 from backend.ml.scaling import determine_scaling_action
 from backend.ml.config import DATASET_PATH
@@ -89,3 +95,47 @@ def test_scaling_action_logic():
         current_metrics={"cpu_util_percent": 70.0, "mem_util_percent": 71.0}
     )
     assert stable_rec["scaling_action"] == "MAINTAIN"
+
+def test_ridge_regression_model():
+    processor = DataProcessor()
+    X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
+    model = RidgeRegressionModel(alpha=1.0).fit(X_train, y_train)
+    metrics = model.evaluate(X_test, y_test)
+    for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
+        assert key in metrics, f"Missing key {key} in Ridge metrics"
+    assert metrics["model_type"] == "ridge"
+    assert "weights" in metrics
+    assert "intercept" in metrics
+
+def test_huber_regression_model():
+    processor = DataProcessor()
+    X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
+    model = HuberRegressionModel(epsilon=1.35, max_iter=500).fit(X_train, y_train)
+    metrics = model.evaluate(X_test, y_test)
+    for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
+        assert key in metrics, f"Missing key {key} in Huber metrics"
+    assert metrics["model_type"] == "huber"
+    assert "weights" in metrics
+    assert "intercept" in metrics
+
+def test_random_forest_regression_model():
+    processor = DataProcessor()
+    X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
+    model = RandomForestRegressionModel(n_estimators=50, max_depth=6, random_state=42).fit(X_train, y_train)
+    metrics = model.evaluate(X_test, y_test)
+    for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
+        assert key in metrics, f"Missing key {key} in Random Forest metrics"
+    assert metrics["model_type"] == "random_forest"
+    assert "feature_importances" in metrics
+    assert len(metrics["feature_importances"]) == 5
+
+def test_svr_regression_model():
+    processor = DataProcessor()
+    X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
+    model = SVRRegressionModel(kernel='rbf', C=1.0, epsilon=0.5).fit(X_train, y_train)
+    metrics = model.evaluate(X_test, y_test)
+    for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
+        assert key in metrics, f"Missing key {key} in SVR metrics"
+    assert metrics["model_type"] == "svr"
+    assert "weights" not in metrics
+

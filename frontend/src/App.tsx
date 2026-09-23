@@ -5,7 +5,6 @@ import { SimulationPage } from './pages/SimulationPage';
 import { ComparisonPage } from './pages/ComparisonPage';
 import { TrainingPage } from './pages/TrainingPage';
 import { DatasetPage } from './pages/DatasetPage';
-import { TheoryPage } from './pages/TheoryPage';
 import { fetchHealth, fetchComparison } from './services/api';
 import { ComparisonResponse } from './types/api';
 import { AlertTriangle } from 'lucide-react';
@@ -112,7 +111,6 @@ const App: React.FC = () => {
             />
           )}
           {activeTab === 'dataset' && <DatasetPage />}
-          {activeTab === 'theory' && <TheoryPage />}
         </main>
 
         {/* Global Footer */}
