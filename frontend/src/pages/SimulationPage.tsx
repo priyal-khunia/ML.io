@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Sliders,
-  Sparkles,
   Cpu,
   Activity,
   HardDrive,
@@ -9,6 +8,8 @@ import {
   Info,
   RotateCcw,
   AlertTriangle,
+  Server,
+  ArrowRight,
 } from 'lucide-react';
 import { StatusBadge } from '../components/StatusBadge';
 import { PredictResponse, PredictRequest } from '../types/api';
@@ -79,24 +80,24 @@ export const SimulationPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn max-w-5xl">
+    <div className="space-y-8 max-w-5xl">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-[#6C63FF] text-xs font-bold uppercase tracking-wider mb-1">
+        <div className="flex items-center gap-2 text-blue-700 text-xs font-bold uppercase tracking-wider mb-1">
           <Sliders className="w-4 h-4" />
-          Interactive Inference & Decision Simulation
+          <span>Interactive Inference & Decision Simulation</span>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#252936] tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
           Cloud Resource Prediction & Auto-Scaling Engine
         </h2>
-        <p className="text-sm text-[#6B7280] max-w-3xl mt-1.5 leading-relaxed">
+        <p className="text-xs sm:text-sm text-[#64748B] max-w-3xl mt-1.5 leading-relaxed">
           Simulate 5-minute resource forecasts and automated scaling recommendations from live telemetry.
         </p>
       </div>
 
       {/* Workload Presets */}
       <div>
-        <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block mb-2.5">
+        <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block mb-2.5">
           Workload Scenario Presets (Click to autofill):
         </span>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
@@ -108,12 +109,12 @@ export const SimulationPage: React.FC = () => {
                 setInputs(preset.values);
                 setResult(null);
               }}
-              className="text-left p-3 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#6C63FF]/50 hover:bg-[#F7F8FC] transition-all group"
+              className="text-left p-3 rounded-lg bg-white border border-[#E2E8F0] hover:border-blue-400 hover:bg-[#F8FAFC] transition-colors group"
             >
-              <span className="text-xs font-bold text-[#252936] group-hover:text-[#6C63FF] block">
+              <span className="text-xs font-bold text-[#0F172A] group-hover:text-blue-600 block">
                 {preset.label}
               </span>
-              <span className="text-[11px] text-[#6B7280] line-clamp-1 mt-0.5">
+              <span className="text-[11px] text-[#64748B] line-clamp-1 mt-0.5">
                 {preset.desc}
               </span>
             </button>
@@ -123,182 +124,164 @@ export const SimulationPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Metric Input Form */}
-        <div className="lg:col-span-6 bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
+        <div className="lg:col-span-6 bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
             <div>
-              <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
                 Input Cloud Server Metrics (X)
               </h3>
-              <p className="text-[11px] text-[#6B7280]">Type or adjust values for instant prediction</p>
+              <p className="text-[11px] text-[#64748B]">Type or adjust values for instant prediction</p>
             </div>
             <button
               type="button"
               onClick={handleClear}
-              className="flex items-center gap-1 px-2.5 py-1 rounded bg-[#F9FAFB] hover:bg-[#F3F4F6] text-xs font-semibold text-[#E76F6F] hover:text-[#D95858] transition-colors border border-[#E5E7EB]"
+              className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-[#F8FAFC] hover:bg-[#F1F5F9] text-xs font-semibold text-rose-600 hover:text-rose-700 transition-colors border border-[#CBD5E1]"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Clear Form</span>
             </button>
           </div>
 
-          <form onSubmit={handlePredict} className="space-y-5">
-            {/* CPU Util */}
+          <form onSubmit={handlePredict} className="space-y-4">
+            {/* CPU Slider */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center gap-1.5 font-semibold text-[#252936]">
-                  <Cpu className="w-3.5 h-3.5 text-[#5B9CF6]" />
-                  CPU Utilization (cpu_util_percent)
-                </label>
+                <div className="flex items-center gap-1.5 font-semibold text-[#0F172A]">
+                  <Cpu className="w-3.5 h-3.5 text-sky-600" />
+                  <span>CPU Utilization</span>
+                </div>
                 <div className="flex items-center gap-1">
                   <input
                     type="number"
                     min="0"
                     max="100"
                     step="0.1"
-                    value={inputs.cpu_util_percent || ''}
+                    value={inputs.cpu_util_percent}
                     onChange={(e) => setInputs({ ...inputs, cpu_util_percent: parseFloat(e.target.value) || 0 })}
-                    placeholder="0.0"
-                    className="w-20 px-2 py-1 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-right font-mono text-[#252936] font-bold text-xs focus:outline-none focus:border-[#6C63FF]"
+                    className="w-20 px-2 py-1 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-right font-mono text-[#0F172A] font-bold text-xs focus:outline-none focus:border-blue-600"
                   />
-                  <span className="font-mono text-[#6C63FF] font-bold">%</span>
+                  <span className="font-mono text-blue-600 font-bold">%</span>
                 </div>
               </div>
               <input
                 type="range"
                 min="0"
                 max="100"
-                step="0.1"
+                step="0.5"
                 value={inputs.cpu_util_percent}
                 onChange={(e) => setInputs({ ...inputs, cpu_util_percent: parseFloat(e.target.value) || 0 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#6C63FF]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-blue-600"
               />
-              <div className="flex justify-between text-[10px] text-[#6B7280] font-mono">
-                <span>0%</span>
-                <span>50%</span>
-                <span>100%</span>
-              </div>
             </div>
 
-            {/* Memory Util */}
+            {/* Memory Slider */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center gap-1.5 font-semibold text-[#252936]">
-                  <Activity className="w-3.5 h-3.5 text-[#6C63FF]" />
-                  Memory Utilization (mem_util_percent)
-                </label>
+                <div className="flex items-center gap-1.5 font-semibold text-[#0F172A]">
+                  <Activity className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Memory Utilization</span>
+                </div>
                 <div className="flex items-center gap-1">
                   <input
                     type="number"
                     min="0"
                     max="100"
                     step="0.1"
-                    value={inputs.mem_util_percent || ''}
+                    value={inputs.mem_util_percent}
                     onChange={(e) => setInputs({ ...inputs, mem_util_percent: parseFloat(e.target.value) || 0 })}
-                    placeholder="0.0"
-                    className="w-20 px-2 py-1 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-right font-mono text-[#252936] font-bold text-xs focus:outline-none focus:border-[#6C63FF]"
+                    className="w-20 px-2 py-1 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-right font-mono text-[#0F172A] font-bold text-xs focus:outline-none focus:border-blue-600"
                   />
-                  <span className="font-mono text-[#6C63FF] font-bold">%</span>
+                  <span className="font-mono text-blue-600 font-bold">%</span>
                 </div>
               </div>
               <input
                 type="range"
                 min="0"
                 max="100"
-                step="0.1"
+                step="0.5"
                 value={inputs.mem_util_percent}
                 onChange={(e) => setInputs({ ...inputs, mem_util_percent: parseFloat(e.target.value) || 0 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#6C63FF]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-blue-600"
               />
-              <div className="flex justify-between text-[10px] text-[#6B7280] font-mono">
-                <span>0%</span>
-                <span>50%</span>
-                <span>100%</span>
-              </div>
             </div>
 
-            {/* Network In & Out */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="flex items-center gap-1 text-[#252936] font-semibold truncate">
-                    <Globe className="w-3.5 h-3.5 text-[#5B9CF6]" />
-                    Net In (MB/s)
-                  </label>
+            {/* Network In & Out Inputs */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs font-semibold text-[#0F172A]">
+                  <span className="flex items-center gap-1">
+                    <Globe className="w-3.5 h-3.5 text-[#64748B]" />
+                    <span>Net In</span>
+                  </span>
+                  <span className="text-[10px] text-[#64748B]">MB/s</span>
                 </div>
                 <input
                   type="number"
-                  step="0.1"
                   min="0"
-                  value={inputs.net_in || ''}
+                  step="0.1"
+                  value={inputs.net_in}
                   onChange={(e) => setInputs({ ...inputs, net_in: parseFloat(e.target.value) || 0 })}
-                  placeholder="0.0"
-                  className="w-full px-3 py-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+                  className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
                 />
               </div>
 
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <label className="flex items-center gap-1 text-[#252936] font-semibold truncate">
-                    <Globe className="w-3.5 h-3.5 text-[#5B9CF6]" />
-                    Net Out (MB/s)
-                  </label>
+              <div className="space-y-1">
+                <div className="flex items-center justify-between text-xs font-semibold text-[#0F172A]">
+                  <span className="flex items-center gap-1">
+                    <Globe className="w-3.5 h-3.5 text-[#64748B]" />
+                    <span>Net Out</span>
+                  </span>
+                  <span className="text-[10px] text-[#64748B]">MB/s</span>
                 </div>
                 <input
                   type="number"
-                  step="0.1"
                   min="0"
-                  value={inputs.net_out || ''}
+                  step="0.1"
+                  value={inputs.net_out}
                   onChange={(e) => setInputs({ ...inputs, net_out: parseFloat(e.target.value) || 0 })}
-                  placeholder="0.0"
-                  className="w-full px-3 py-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+                  className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
                 />
               </div>
             </div>
 
-            {/* Disk IO */}
+            {/* Disk I/O Slider */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="flex items-center gap-1.5 font-semibold text-[#252936]">
-                  <HardDrive className="w-3.5 h-3.5 text-[#E7A83B]" />
-                  Disk I/O Utilization (disk_io_percent)
-                </label>
+                <div className="flex items-center gap-1.5 font-semibold text-[#0F172A]">
+                  <HardDrive className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Disk I/O Utilization</span>
+                </div>
                 <div className="flex items-center gap-1">
                   <input
                     type="number"
                     min="0"
                     max="100"
                     step="0.1"
-                    value={inputs.disk_io_percent || ''}
+                    value={inputs.disk_io_percent}
                     onChange={(e) => setInputs({ ...inputs, disk_io_percent: parseFloat(e.target.value) || 0 })}
-                    placeholder="0.0"
-                    className="w-20 px-2 py-1 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-right font-mono text-[#252936] font-bold text-xs focus:outline-none focus:border-[#6C63FF]"
+                    className="w-20 px-2 py-1 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-right font-mono text-[#0F172A] font-bold text-xs focus:outline-none focus:border-blue-600"
                   />
-                  <span className="font-mono text-[#E7A83B] font-bold">%</span>
+                  <span className="font-mono text-blue-600 font-bold">%</span>
                 </div>
               </div>
               <input
                 type="range"
                 min="0"
                 max="100"
-                step="0.1"
+                step="0.5"
                 value={inputs.disk_io_percent}
                 onChange={(e) => setInputs({ ...inputs, disk_io_percent: parseFloat(e.target.value) || 0 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#E7A83B]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-blue-600"
               />
-              <div className="flex justify-between text-[10px] text-[#6B7280] font-mono">
-                <span>0%</span>
-                <span>50%</span>
-                <span>100%</span>
-              </div>
             </div>
 
-            {/* Current Provisioned Capacity Reference */}
-            <div className="pt-2 border-t border-[#E5E7EB]">
-              <div className="flex items-center justify-between text-xs mb-1">
-                <label className="text-[#6B7280] font-medium">
-                  Current Provisioned Baseline Capacity (%) (Optional)
+            {/* Optional Current Capacity */}
+            <div className="space-y-1 pt-2 border-t border-[#E2E8F0]">
+              <div className="flex items-center justify-between text-xs">
+                <label className="font-semibold text-[#0F172A]">
+                  Current Cluster Capacity Buffer (Optional %)
                 </label>
-                <span className="font-mono text-[#252936]">
+                <span className="font-mono text-[#0F172A]">
                   {inputs.current_capacity !== undefined ? `${inputs.current_capacity}%` : 'None'}
                 </span>
               </div>
@@ -310,7 +293,7 @@ export const SimulationPage: React.FC = () => {
                 placeholder="e.g. 85.0"
                 value={inputs.current_capacity ?? ''}
                 onChange={(e) => setInputs({ ...inputs, current_capacity: e.target.value === '' ? undefined : parseFloat(e.target.value) })}
-                className="w-full px-3 py-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+                className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
               />
             </div>
 
@@ -319,15 +302,15 @@ export const SimulationPage: React.FC = () => {
               type="submit"
               disabled={loading}
               id="predict-btn"
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#6C63FF] hover:bg-[#5A52E0] text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs uppercase tracking-wider transition-colors disabled:opacity-50"
             >
-              <Sparkles className="w-4 h-4" />
+              <Server className="w-4 h-4" />
               <span>{loading ? 'Executing Multivariable Inference...' : 'PREDICT RESOURCE REQUIREMENT'}</span>
             </button>
           </form>
 
           {error && (
-            <div className="p-3 bg-[#E76F6F]/10 border border-[#E76F6F]/30 rounded-xl text-[#E76F6F] text-xs flex items-center gap-2">
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-md text-rose-700 text-xs flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               <span>{error}</span>
             </div>
@@ -339,87 +322,87 @@ export const SimulationPage: React.FC = () => {
           {result ? (
             <div className="space-y-6">
               {/* Primary Output Card */}
-              <div className="bg-white border border-[#6C63FF]/30 rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] relative overflow-hidden">
+              <div className="bg-white border border-blue-200 rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] relative overflow-hidden">
                 <div className="flex items-center justify-between mb-4">
-                  <span className="text-xs font-bold text-[#6C63FF] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">
                     Model Inference Output (+5 Min)
                   </span>
                   <StatusBadge action={result.scaling_action} size="md" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 my-4">
-                  <div className="p-4 bg-[#F7F8FC] rounded-xl border border-[#E5E7EB]">
-                    <span className="text-xs text-[#6B7280] block mb-1">
+                  <div className="p-4 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
+                    <span className="text-xs text-[#64748B] block mb-1">
                       Asymmetric Model Forecast
                     </span>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-[#252936] font-mono">
+                      <span className="text-3xl font-extrabold text-[#0F172A] font-mono">
                         {result.predicted_resource.toFixed(2)}
                       </span>
-                      <span className="text-sm font-semibold text-[#6C63FF]">%</span>
+                      <span className="text-sm font-semibold text-blue-600">%</span>
                     </div>
-                    <span className="text-[11px] text-[#6C63FF] font-medium block mt-1">
+                    <span className="text-[11px] text-blue-700 font-medium block mt-1">
                       SLA-Protected Target
                     </span>
                   </div>
 
-                  <div className="p-4 bg-[#F7F8FC] rounded-xl border border-[#E5E7EB]">
-                    <span className="text-xs text-[#6B7280] block mb-1">
+                  <div className="p-4 bg-[#F8FAFC] rounded-lg border border-[#E2E8F0]">
+                    <span className="text-xs text-[#64748B] block mb-1">
                       Baseline OLS Forecast
                     </span>
                     <div className="flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-[#6B7280] font-mono">
+                      <span className="text-3xl font-extrabold text-[#64748B] font-mono">
                         {result.baseline_predicted_resource.toFixed(2)}
                       </span>
-                      <span className="text-sm font-semibold text-[#6B7280]">%</span>
+                      <span className="text-sm font-semibold text-[#64748B]">%</span>
                     </div>
-                    <span className="text-[11px] text-[#6B7280] font-medium block mt-1">
+                    <span className="text-[11px] text-[#64748B] font-medium block mt-1">
                       Symmetric MSE
                     </span>
                   </div>
                 </div>
 
                 {/* Safety Headroom Callout */}
-                <div className="p-3 bg-[#6C63FF]/10 border border-[#6C63FF]/20 rounded-xl flex items-center justify-between text-xs">
-                  <span className="text-[#252936]">
+                <div className="p-3 bg-blue-50 border border-blue-200 rounded-md flex items-center justify-between text-xs">
+                  <span className="text-[#0F172A]">
                     Asymmetric Safety Buffer (Δ vs OLS):
                   </span>
-                  <span className="font-mono font-bold text-[#6C63FF]">
+                  <span className="font-mono font-bold text-blue-700">
                     +{result.asymmetric_safety_headroom > 0 ? result.asymmetric_safety_headroom.toFixed(2) : '0.00'}% Capacity Headroom
                   </span>
                 </div>
               </div>
 
               {/* Decision Rationale */}
-              <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-                <div className="flex items-center gap-2 text-[#252936] font-bold text-sm uppercase tracking-wider">
-                  <Info className="w-4 h-4 text-[#6C63FF]" />
-                  Recommended Scaling Action & Rationale
+              <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
+                <div className="flex items-center gap-2 text-[#0F172A] font-bold text-sm uppercase tracking-wider">
+                  <Info className="w-4 h-4 text-blue-600" />
+                  <span>Recommended Scaling Action & Rationale</span>
                 </div>
 
-                <div className="p-4 bg-[#F7F8FC] border border-[#E5E7EB] rounded-xl space-y-2">
+                <div className="p-4 bg-[#F8FAFC] border border-[#E2E8F0] rounded-md space-y-2">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-[#6B7280]">Provisioning Status:</span>
-                    <span className="font-mono font-bold text-[#252936] px-2 py-0.5 rounded bg-white border border-[#E5E7EB]">
+                    <span className="text-[#64748B]">Provisioning Status:</span>
+                    <span className="font-mono font-bold text-[#0F172A] px-2 py-0.5 rounded-md bg-white border border-[#CBD5E1]">
                       {result.provisioning_status}
                     </span>
                   </div>
 
-                  <p className="text-xs text-[#252936] leading-relaxed pt-2 border-t border-[#E5E7EB]">
+                  <p className="text-xs text-[#0F172A] leading-relaxed pt-2 border-t border-[#E2E8F0]">
                     {result.rationale}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-3 text-xs">
-                  <div className="p-3 bg-[#F7F8FC] rounded-xl border border-[#E5E7EB]">
-                    <span className="text-[#6B7280] block text-[11px]">Decision Confidence</span>
-                    <span className="font-mono font-bold text-[#252936] text-sm">
+                  <div className="p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0]">
+                    <span className="text-[#64748B] block text-[11px]">Decision Confidence</span>
+                    <span className="font-mono font-bold text-[#0F172A] text-sm">
                       {result.confidence_score}%
                     </span>
                   </div>
-                  <div className="p-3 bg-[#F7F8FC] rounded-xl border border-[#E5E7EB]">
-                    <span className="text-[#6B7280] block text-[11px]">Prediction ID</span>
-                    <span className="font-mono font-bold text-[#6C63FF] text-sm">
+                  <div className="p-3 bg-[#F8FAFC] rounded-md border border-[#E2E8F0]">
+                    <span className="text-[#64748B] block text-[11px]">Prediction ID</span>
+                    <span className="font-mono font-bold text-blue-700 text-sm">
                       #{result.prediction_id}
                     </span>
                   </div>
@@ -427,12 +410,12 @@ export const SimulationPage: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="h-full flex flex-col items-center justify-center p-8 bg-white/60 border border-dashed border-[#E5E7EB] rounded-2xl text-center">
-              <Sparkles className="w-10 h-10 text-[#6C63FF]/30 mb-3" />
-              <h4 className="text-sm font-bold text-[#252936]">Awaiting Workload Input</h4>
-              <p className="text-xs text-[#6B7280] max-w-sm mt-1">
-                Enter your metrics on the left or pick an example preset, then click{' '}
-                <strong className="text-[#6C63FF]">"PREDICT RESOURCE REQUIREMENT"</strong> to evaluate.
+            <div className="h-full flex flex-col items-center justify-center p-8 bg-white/70 border border-dashed border-[#CBD5E1] rounded-xl text-center">
+              <Server className="w-10 h-10 text-slate-300 mb-3" />
+              <h4 className="text-sm font-bold text-[#0F172A]">Awaiting Workload Telemetry Input</h4>
+              <p className="text-xs text-[#64748B] max-w-sm mt-1">
+                Enter your metrics on the left or select a scenario preset, then click{' '}
+                <strong className="text-blue-700">"PREDICT RESOURCE REQUIREMENT"</strong> to evaluate.
               </p>
             </div>
           )}

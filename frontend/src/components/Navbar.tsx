@@ -32,24 +32,24 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-[#E5E7EB]">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-[#E2E8F0]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Academic Title */}
+          {/* Logo & Systems Title */}
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-[#6C63FF] rounded-xl shadow-sm text-white">
+            <div className="p-2 bg-blue-600 rounded-lg text-white">
               <Server className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-sm font-bold tracking-tight text-[#252936] uppercase">
-                  Asymmetric Cloud Scaling ML
+                <h1 className="text-sm font-bold tracking-tight text-[#0F172A] uppercase">
+                  Cloud Auto-Scale ML
                 </h1>
-                <span className="text-[10px] uppercase font-mono font-semibold px-2 py-0.5 rounded bg-[#6C63FF]/10 text-[#6C63FF] border border-[#6C63FF]/20">
-                  Prototype
+                <span className="text-[10px] uppercase font-mono font-semibold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
+                  Production
                 </span>
               </div>
-              <p className="text-[11px] text-[#6B7280] truncate max-w-md">
+              <p className="text-[11px] text-[#64748B] truncate max-w-md">
                 Asymmetric Cost-Weighted Multivariable Regression for Resource Auto-Scaling
               </p>
             </div>
@@ -64,10 +64,10 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md text-xs font-medium transition-colors ${
                     isActive
-                      ? 'bg-[#8B85FF]/15 text-[#6C63FF] border border-[#8B85FF]/30 shadow-sm'
-                      : 'text-[#6B7280] hover:text-[#252936] hover:bg-[#F3F4F6]'
+                      ? 'bg-blue-50 text-blue-700 border border-blue-200 shadow-xs'
+                      : 'text-[#64748B] hover:text-[#0F172A] hover:bg-[#F1F5F9]'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -77,32 +77,32 @@ export const Navbar: React.FC<NavbarProps> = ({
             })}
           </nav>
 
-          {/* Backend Status Pill */}
+          {/* Backend Status */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono border bg-[#F9FAFB] border-[#E5E7EB]">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border bg-[#F8FAFC] border-[#E2E8F0]">
               {backendHealthy ? (
                 <>
-                  <span className="w-2 h-2 rounded-full bg-[#35B99A] animate-pulse" />
-                  <span className="text-[#35B99A] font-medium">FastAPI Online</span>
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-emerald-700 font-medium">FastAPI 8000</span>
                 </>
               ) : (
                 <>
-                  <span className="w-2 h-2 rounded-full bg-[#E76F6F]" />
-                  <span className="text-[#E76F6F] font-medium">Backend Offline</span>
+                  <span className="w-2 h-2 rounded-full bg-rose-500" />
+                  <span className="text-rose-700 font-medium">Backend Offline</span>
                 </>
               )}
             </div>
 
-            <div className="hidden lg:flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-mono border bg-[#F9FAFB] border-[#E5E7EB]">
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono border bg-[#F8FAFC] border-[#E2E8F0]">
               {modelReady ? (
                 <>
-                  <CheckCircle className="w-3.5 h-3.5 text-[#6C63FF]" />
-                  <span className="text-[#6C63FF]">Models Active</span>
+                  <CheckCircle className="w-3.5 h-3.5 text-blue-600" />
+                  <span className="text-blue-700 font-medium">Models Ready</span>
                 </>
               ) : (
                 <>
-                  <AlertCircle className="w-3.5 h-3.5 text-[#E7A83B]" />
-                  <span className="text-[#E7A83B]">Uninitialized</span>
+                  <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
+                  <span className="text-amber-700">Uninitialized</span>
                 </>
               )}
             </div>
@@ -110,7 +110,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Mobile Navigation Tabs */}
-        <div className="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-[#E5E7EB] scrollbar-none">
+        <div className="flex md:hidden overflow-x-auto py-2 space-x-1 border-t border-[#E2E8F0]">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
@@ -118,10 +118,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-xs font-medium whitespace-nowrap ${
                   isActive
-                    ? 'bg-[#8B85FF]/20 text-[#6C63FF] border border-[#8B85FF]/30'
-                    : 'text-[#6B7280] hover:text-[#252936]'
+                    ? 'bg-blue-50 text-blue-700 border border-blue-200'
+                    : 'text-[#64748B] hover:text-[#0F172A]'
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />

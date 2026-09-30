@@ -69,7 +69,7 @@ export const DatasetPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="h-96 flex items-center justify-center text-[#6B7280] text-sm">
+      <div className="h-96 flex items-center justify-center text-[#64748B] text-sm">
         Loading dataset metadata from backend...
       </div>
     );
@@ -77,91 +77,96 @@ export const DatasetPage: React.FC = () => {
 
   if (error || !summary) {
     return (
-      <div className="p-6 bg-[#E76F6F]/10 border border-[#E76F6F]/30 rounded-2xl text-[#E76F6F] text-sm">
+      <div className="p-6 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-sm">
         Failed to load dataset: {error}
       </div>
     );
   }
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-[#6C63FF] text-xs font-bold uppercase tracking-wider mb-1">
+        <div className="flex items-center gap-2 text-blue-700 text-xs font-bold uppercase tracking-wider mb-1">
           <Database className="w-4 h-4" />
-          Cloud Server Observability Telemetry
+          <span>Cloud Server Observability Telemetry</span>
         </div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-[#252936] tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
           Dataset Characteristics & Preprocessing Pipeline
         </h2>
-        <p className="text-sm text-[#6B7280] max-w-3xl mt-1">
-          cloud_resource_dataset.csv &mdash; 5 telemetry features, 5-min-ahead target.
+        <p className="text-xs sm:text-sm text-[#64748B] max-w-3xl mt-1">
+          cloud_resource_dataset.csv: 5 telemetry features, 5-min-ahead target.
         </p>
       </div>
 
       {/* Dataset Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-          <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block">
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+          <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block">
             Total Observations
           </span>
-          <span className="text-2xl font-bold text-[#252936] font-mono mt-1 block">
+          <span className="text-2xl font-bold text-[#0F172A] font-mono mt-1 block">
             {summary.total_records.toLocaleString()}
           </span>
-          <span className="text-[11px] text-[#6B7280] mt-1 block">
+          <span className="text-[11px] text-[#64748B] mt-1 block">
             Sequential 5-min intervals
           </span>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-          <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block">
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+          <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block">
             Input Features (X)
           </span>
-          <span className="text-2xl font-bold text-[#6C63FF] font-mono mt-1 block">
+          <span className="text-2xl font-bold text-blue-600 font-mono mt-1 block">
             {summary.feature_names.length}
           </span>
-          <span className="text-[11px] text-[#6B7280] mt-1 block">
+          <span className="text-[11px] text-[#64748B] mt-1 block">
             Multivariable telemetry
           </span>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-          <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block">
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+          <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block">
             Train Split (80%)
           </span>
-          <span className="text-2xl font-bold text-[#5B9CF6] font-mono mt-1 block">
+          <span className="text-2xl font-bold text-[#0F172A] font-mono mt-1 block">
             {summary.train_records.toLocaleString()}
           </span>
-          <span className="text-[11px] text-[#6B7280] mt-1 block">
-            Chronological
+          <span className="text-[11px] text-[#64748B] mt-1 block">
+            Chronological leak-free
           </span>
         </div>
 
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-          <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block">
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+          <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block">
             Test Split (20%)
           </span>
-          <span className="text-2xl font-bold text-[#E7A83B] font-mono mt-1 block">
+          <span className="text-2xl font-bold text-[#0F172A] font-mono mt-1 block">
             {summary.test_records.toLocaleString()}
           </span>
-          <span className="text-[11px] text-[#6B7280] mt-1 block">
-            Holdout partition
+          <span className="text-[11px] text-[#64748B] mt-1 block">
+            Strict held-out validation
           </span>
         </div>
       </div>
 
-      {/* Feature Distributions & Preprocessing Audit */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-          <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider flex items-center gap-2">
-            <Layers className="w-4 h-4 text-[#6C63FF]" />
-            Statistical Distributions of Input Features & Target
-          </h3>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        {/* Statistical Summary Table */}
+        <div className="lg:col-span-8 bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+            <div>
+              <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+                <Layers className="w-4 h-4 text-blue-600" />
+                <span>Multivariable Feature Distributions</span>
+              </h3>
+              <p className="text-xs text-[#64748B] mt-0.5">Empirical moments across all sequential observations</p>
+            </div>
+          </div>
 
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-[#E5E7EB] text-[#6B7280] font-semibold">
+                <tr className="border-b border-[#E2E8F0] text-[#64748B] font-semibold">
                   <th className="pb-3">Column Name</th>
                   <th className="pb-3 text-right">Mean</th>
                   <th className="pb-3 text-right">Std</th>
@@ -170,29 +175,29 @@ export const DatasetPage: React.FC = () => {
                   <th className="pb-3 text-right">Max</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E7EB] font-mono">
+              <tbody className="divide-y divide-[#F1F5F9] font-mono">
                 {Object.entries(summary.feature_statistics).map(([col, stats]) => {
                   const isTarget = col === summary.target_name;
                   return (
                     <tr
                       key={col}
-                      className={`hover:bg-[#F7F8FC] transition-colors ${
-                        isTarget ? 'bg-[#6C63FF]/5' : ''
+                      className={`hover:bg-[#F8FAFC] transition-colors ${
+                        isTarget ? 'bg-blue-50/50' : ''
                       }`}
                     >
-                      <td className="py-2.5 font-sans font-medium text-[#252936] flex items-center gap-2">
+                      <td className="py-2.5 font-sans font-medium text-[#0F172A] flex items-center gap-2">
                         <span>{col}</span>
                         {isTarget && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[#6C63FF]/15 text-[#6C63FF] border border-[#6C63FF]/30">
+                          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 border border-blue-200">
                             TARGET (Y)
                           </span>
                         )}
                       </td>
-                      <td className="py-2.5 text-right text-[#252936]">{stats.mean.toFixed(2)}</td>
-                      <td className="py-2.5 text-right text-[#6B7280]">{stats.std.toFixed(2)}</td>
-                      <td className="py-2.5 text-right text-[#6B7280]">{stats.min.toFixed(2)}</td>
-                      <td className="py-2.5 text-right text-[#6C63FF] font-bold">{stats.median.toFixed(2)}</td>
-                      <td className="py-2.5 text-right text-[#252936]">{stats.max.toFixed(2)}</td>
+                      <td className="py-2.5 text-right text-[#0F172A]">{stats.mean.toFixed(2)}</td>
+                      <td className="py-2.5 text-right text-[#64748B]">{stats.std.toFixed(2)}</td>
+                      <td className="py-2.5 text-right text-[#64748B]">{stats.min.toFixed(2)}</td>
+                      <td className="py-2.5 text-right text-blue-700 font-bold">{stats.median.toFixed(2)}</td>
+                      <td className="py-2.5 text-right text-[#0F172A]">{stats.max.toFixed(2)}</td>
                     </tr>
                   );
                 })}
@@ -202,60 +207,61 @@ export const DatasetPage: React.FC = () => {
         </div>
 
         {/* Data Preprocessing Audit Card */}
-        <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-          <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#35B99A]" />
-            Preprocessing & Hygiene Audit
+        <div className="lg:col-span-4 bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
+          <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+            <span>Preprocessing & Hygiene Audit</span>
           </h3>
 
-          <ul className="space-y-3 text-xs text-[#6B7280]">
+          <ul className="space-y-3 text-xs text-[#64748B]">
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#35B99A] shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                <strong className="text-[#252936]">Zero Missing Values</strong> ({summary.total_records.toLocaleString()} rows)
+                <strong className="text-[#0F172A]">Zero Missing Values</strong> ({summary.total_records.toLocaleString()} rows)
               </span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#35B99A] shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                <strong className="text-[#252936]">Zero Duplicate Rows</strong>
+                <strong className="text-[#0F172A]">Chronological Split:</strong> 80% train / 20% test without temporal shuffling
               </span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#35B99A] shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                <strong className="text-[#252936]">Chronological Split:</strong> 80% Train ({summary.train_records.toLocaleString()}) / 20% Test ({summary.test_records.toLocaleString()})
+                <strong className="text-[#0F172A]">StandardScaler:</strong> Fitted strictly on train split; zero test leakage
               </span>
             </li>
             <li className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-[#35B99A] shrink-0" />
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
               <span>
-                <strong className="text-[#252936]">StandardScaler:</strong> Fitted strictly on train set
+                <strong className="text-[#0F172A]">Telemetry Vector:</strong> CPU, RAM, Net In/Out, Disk I/O normalized to μ=0, σ=1
               </span>
             </li>
           </ul>
         </div>
       </div>
 
-      {/* Quick Add Custom Telemetry Observation Card */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <PlusCircle className="w-4 h-4 text-[#6C63FF]" />
-            <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
-              Add New Telemetry Observation
+      {/* Add Observation Form */}
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+          <div>
+            <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+              <PlusCircle className="w-4 h-4 text-blue-600" />
+              <span>Append Cluster Observation</span>
             </h3>
+            <p className="text-xs text-[#64748B] mt-0.5">Append a telemetry observation row to cloud_resource_dataset.csv</p>
           </div>
           {addMsg && (
-            <span className="text-xs font-semibold text-[#35B99A] bg-[#35B99A]/10 border border-[#35B99A]/20 px-2.5 py-1 rounded">
+            <span className="text-xs text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
               {addMsg}
             </span>
           )}
         </div>
 
-        <form onSubmit={handleAddRow} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-1">
+        <form onSubmit={handleAddRow} className="grid grid-cols-2 sm:grid-cols-6 gap-3">
           <div>
-            <label className="text-[11px] font-semibold text-[#6B7280] block mb-1">CPU %</label>
+            <label className="text-[11px] font-semibold text-[#64748B] block mb-1">CPU Util %</label>
             <input
               type="number"
               step="0.1"
@@ -264,26 +270,26 @@ export const DatasetPage: React.FC = () => {
               placeholder="e.g. 45.2"
               value={newRow.cpu_util_percent}
               onChange={(e) => setNewRow({ ...newRow, cpu_util_percent: e.target.value })}
-              className="w-full px-2.5 py-1.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+              className="w-full px-2.5 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
               required
             />
           </div>
           <div>
-            <label className="text-[11px] font-semibold text-[#6B7280] block mb-1">Mem %</label>
+            <label className="text-[11px] font-semibold text-[#64748B] block mb-1">Mem Util %</label>
             <input
               type="number"
               step="0.1"
               min="0"
               max="100"
-              placeholder="e.g. 88.5"
+              placeholder="e.g. 88.0"
               value={newRow.mem_util_percent}
               onChange={(e) => setNewRow({ ...newRow, mem_util_percent: e.target.value })}
-              className="w-full px-2.5 py-1.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+              className="w-full px-2.5 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
               required
             />
           </div>
           <div>
-            <label className="text-[11px] font-semibold text-[#6B7280] block mb-1">Net In</label>
+            <label className="text-[11px] font-semibold text-[#64748B] block mb-1">Net In</label>
             <input
               type="number"
               step="0.1"
@@ -291,11 +297,11 @@ export const DatasetPage: React.FC = () => {
               placeholder="e.g. 35.0"
               value={newRow.net_in}
               onChange={(e) => setNewRow({ ...newRow, net_in: e.target.value })}
-              className="w-full px-2.5 py-1.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+              className="w-full px-2.5 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
             />
           </div>
           <div>
-            <label className="text-[11px] font-semibold text-[#6B7280] block mb-1">Net Out</label>
+            <label className="text-[11px] font-semibold text-[#64748B] block mb-1">Net Out</label>
             <input
               type="number"
               step="0.1"
@@ -303,11 +309,11 @@ export const DatasetPage: React.FC = () => {
               placeholder="e.g. 28.0"
               value={newRow.net_out}
               onChange={(e) => setNewRow({ ...newRow, net_out: e.target.value })}
-              className="w-full px-2.5 py-1.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+              className="w-full px-2.5 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
             />
           </div>
           <div>
-            <label className="text-[11px] font-semibold text-[#6B7280] block mb-1">Disk I/O %</label>
+            <label className="text-[11px] font-semibold text-[#64748B] block mb-1">Disk I/O %</label>
             <input
               type="number"
               step="0.1"
@@ -316,14 +322,14 @@ export const DatasetPage: React.FC = () => {
               placeholder="e.g. 5.5"
               value={newRow.disk_io_percent}
               onChange={(e) => setNewRow({ ...newRow, disk_io_percent: e.target.value })}
-              className="w-full px-2.5 py-1.5 bg-[#F9FAFB] border border-[#E5E7EB] rounded text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+              className="w-full px-2.5 py-1.5 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
             />
           </div>
           <div className="flex flex-col justify-end">
             <button
               type="submit"
               disabled={addingRow}
-              className="w-full py-1.5 px-3 rounded bg-[#6C63FF] hover:bg-[#5A52E0] text-white font-bold text-xs transition-colors shadow-sm disabled:opacity-50"
+              className="w-full py-2 px-3 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-medium text-xs transition-colors shadow-xs disabled:opacity-50"
             >
               {addingRow ? 'Adding...' : '+ Add Record'}
             </button>
@@ -332,38 +338,38 @@ export const DatasetPage: React.FC = () => {
       </div>
 
       {/* Dataset Preview Table */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider flex items-center gap-2">
-            <FileSpreadsheet className="w-4 h-4 text-[#6C63FF]" />
-            Dataset Observation Preview
+          <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider flex items-center gap-2">
+            <FileSpreadsheet className="w-4 h-4 text-blue-600" />
+            <span>Dataset Observation Preview</span>
           </h3>
-          <span className="text-xs font-mono text-[#6B7280]">Showing 15 rows</span>
+          <span className="text-xs font-mono text-[#64748B]">Showing 15 rows</span>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#E5E7EB] text-[#6B7280] font-semibold">
+              <tr className="border-b border-[#E2E8F0] text-[#64748B] font-semibold">
                 <th className="pb-3">Index</th>
                 <th className="pb-3">CPU Util %</th>
                 <th className="pb-3">Mem Util %</th>
                 <th className="pb-3">Net In</th>
                 <th className="pb-3">Net Out</th>
                 <th className="pb-3">Disk I/O %</th>
-                <th className="pb-3 text-[#6C63FF] font-bold">Target (+5 min)</th>
+                <th className="pb-3 text-blue-700 font-bold">Target (+5 min)</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E7EB] font-mono">
+            <tbody className="divide-y divide-[#F1F5F9] font-mono">
               {summary.preview.map((row, idx) => (
-                <tr key={idx} className="hover:bg-[#F7F8FC] transition-colors">
-                  <td className="py-2.5 text-[#6B7280] font-sans">#{idx + 1}</td>
-                  <td className="py-2.5 text-[#252936]">{Number(row.cpu_util_percent).toFixed(2)}%</td>
-                  <td className="py-2.5 text-[#252936]">{Number(row.mem_util_percent).toFixed(2)}%</td>
-                  <td className="py-2.5 text-[#6B7280]">{Number(row.net_in).toFixed(2)}</td>
-                  <td className="py-2.5 text-[#6B7280]">{Number(row.net_out).toFixed(2)}</td>
-                  <td className="py-2.5 text-[#6B7280]">{Number(row.disk_io_percent).toFixed(2)}%</td>
-                  <td className="py-2.5 font-bold text-[#6C63FF]">
+                <tr key={idx} className="hover:bg-[#F8FAFC] transition-colors">
+                  <td className="py-2.5 text-[#64748B] font-sans">#{idx + 1}</td>
+                  <td className="py-2.5 text-[#0F172A]">{Number(row.cpu_util_percent).toFixed(2)}%</td>
+                  <td className="py-2.5 text-[#0F172A]">{Number(row.mem_util_percent).toFixed(2)}%</td>
+                  <td className="py-2.5 text-[#64748B]">{Number(row.net_in).toFixed(2)}</td>
+                  <td className="py-2.5 text-[#64748B]">{Number(row.net_out).toFixed(2)}</td>
+                  <td className="py-2.5 text-[#64748B]">{Number(row.disk_io_percent).toFixed(2)}%</td>
+                  <td className="py-2.5 font-bold text-blue-700">
                     {Number(row.required_resource_next_5min).toFixed(2)}%
                   </td>
                 </tr>

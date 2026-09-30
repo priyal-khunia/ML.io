@@ -4,7 +4,6 @@ import { OverviewPage } from './pages/OverviewPage';
 import { SimulationPage } from './pages/SimulationPage';
 import { ComparisonPage } from './pages/ComparisonPage';
 import { TrainingPage } from './pages/TrainingPage';
-import { DatasetPage } from './pages/DatasetPage';
 import { fetchHealth, fetchComparison } from './services/api';
 import { ComparisonResponse } from './types/api';
 import { AlertTriangle } from 'lucide-react';
@@ -55,28 +54,20 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#F7F8FC] text-[#252936] selection:bg-[#6C63FF]/20 selection:text-[#6C63FF]">
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#F8FAFC] text-[#0F172A] selection:bg-blue-100 selection:text-blue-900">
       {/* Fixed Left Sidebar Navigation */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         backendHealthy={backendHealthy}
         modelReady={modelReady}
-        comparisonR2={
-          comparison
-            ? {
-                baseline: comparison.baseline.r2,
-                asymmetric: comparison.asymmetric.r2,
-              }
-            : undefined
-        }
       />
 
       {/* Main Content Area */}
       <div className="flex-1 md:ml-64 flex flex-col min-w-0">
         {initError && (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 w-full">
-            <div className="p-4 bg-[#E76F6F]/10 border border-[#E76F6F]/30 rounded-xl text-[#E76F6F] text-xs flex items-center justify-between gap-3">
+            <div className="p-4 bg-rose-50 border border-rose-200 rounded-md text-rose-700 text-xs flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>
@@ -85,7 +76,7 @@ const App: React.FC = () => {
               </div>
               <button
                 onClick={loadData}
-                className="px-3 py-1 rounded bg-[#E76F6F]/20 hover:bg-[#E76F6F]/30 font-semibold text-[11px] shrink-0"
+                className="px-3 py-1 rounded-md bg-rose-100 hover:bg-rose-200 text-rose-800 font-semibold text-[11px] shrink-0 transition-colors cursor-pointer"
               >
                 Retry Connection
               </button>
@@ -110,17 +101,14 @@ const App: React.FC = () => {
               onTrainingSuccess={handleTrainingSuccess}
             />
           )}
-          {activeTab === 'dataset' && <DatasetPage />}
         </main>
 
-        {/* Global Footer */}
-        <footer className="border-t border-[#E5E7EB] bg-white py-5 text-center text-xs text-[#6B7280]">
-          <div className="max-w-6xl mx-auto px-4 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-2">
-            <span>
-              Academic ML Prototype — Asymmetric Cost Multivariable Regression
-            </span>
-            <span className="font-mono text-[11px] text-[#6B7280]">
-              α=1.0 • β=0.70 • γ=0.5 • Chronological Leak-Free Validation
+        {/* Minimal Engineering Footer */}
+        <footer className="mt-auto border-t border-[#E2E8F0] bg-white text-xs text-[#64748B]">
+          <div className="max-w-6xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
+            <span className="font-semibold text-[#0F172A]">Cloud Auto-Scale ML</span>
+            <span className="text-[11px] text-[#64748B]">
+              Asymmetric Cost-Weighted Multivariable Regression Engine
             </span>
           </div>
         </footer>

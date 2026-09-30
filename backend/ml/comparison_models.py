@@ -1,8 +1,6 @@
 import numpy as np
 from typing import Dict, Any, List, Optional
-from sklearn.linear_model import Ridge, HuberRegressor
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
+from sklearn.linear_model import Ridge, HuberRegressor, QuantileRegressor
 from .metrics import compute_all_metrics
 
 class RidgeRegressionModel:
@@ -95,87 +93,115 @@ class HuberRegressionModel:
         return self.evaluation_metrics
 
 
-class RandomForestRegressionModel:
+class QuantileRegressionModel:
     """
-    Random Forest Regressor (Nonlinear Ensemble Bagging).
-    Constructs an ensemble of decision trees trained with symmetric variance reduction (MSE):
-    MSE = (1/N) * sum((y_i - y_mean)^2)
+    Quantile Regression with Asymmetric Pinball (Check) Loss (tau = 0.85).
+    L_tau(y, y_hat) = max(tau * (y - y_hat), (tau - 1) * (y - y_hat))
 
     Docstring & Purpose:
-    Uses a strictly SYMMETRIC tree-splitting and leaf-aggregation criterion.
-    Included in this benchmark to show that adding nonlinear model capacity
-    and tree ensembles does not overcome the fundamental limitation of symmetric
-    loss: the ensemble centers predictions around the conditional mean, leaving
-    frequent under-provisioning intervals.
+    Standard academic ASYMMETRIC linear loss benchmark (Koenker & Bassett 1978).
+    With tau = 0.85, it penalizes under-prediction ~5.67x heavier than over-prediction.
+    Limitation vs Proposed Model:
+    Pinball loss has a CONSTANT piecewise gradient (+-tau). It cannot penalize large,
+    cascading capacity deficits exponentially harder than minor rounding errors.
     """
-    def __init__(self, n_estimators: int = 200, max_depth: int = 8, random_state: int = 42):
-        self.n_estimators = int(n_estimators)
-        self.max_depth = int(max_depth)
-        self.random_state = int(random_state)
-        self.model = RandomForestRegressor(
-            n_estimators=self.n_estimators,
-            max_depth=self.max_depth,
-            random_state=self.random_state,
-            n_jobs=-1
-        )
-        self.feature_importances: Optional[List[float]] = None
+    def __init__(self, quantile: float = 0.85, alpha: float = 0.01):
+        self.quantile = float(quantile)
+        self.alpha = float(alpha)
+        self.model = QuantileRegressor(quantile=self.quantile, alpha=self.alpha, solver="highs")
+        self.weights: Optional[List[float]] = None
+        self.intercept: Optional[float] = None
         self.is_trained: bool = False
         self.evaluation_metrics: Dict[str, Any] = {}
 
-    def fit(self, X_train: np.ndarray, y_train: np.ndarray) -> "RandomForestRegressionModel":
+    def fit(self, X_train: np.ndarray, y_train: np.ndarray) -> "QuantileRegressionModel":
         self.model.fit(X_train, y_train)
-        self.feature_importances = [round(float(x), 4) for x in self.model.feature_importances_]
+        self.weights = self.model.coef_.tolist()
+        self.intercept = float(self.model.intercept_)
         self.is_trained = True
         return self
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         if not self.is_trained:
-            raise RuntimeError("Random Forest model has not been trained yet.")
+            raise RuntimeError("Quantile model has not been trained yet.")
         return self.model.predict(X)
 
     def evaluate(self, X_test: np.ndarray, y_test: np.ndarray) -> Dict[str, Any]:
         y_pred = self.predict(X_test)
         self.evaluation_metrics = compute_all_metrics(y_test, y_pred)
-        self.evaluation_metrics["model_name"] = "Random Forest Regression (Nonlinear / MSE)"
-        self.evaluation_metrics["model_type"] = "random_forest"
-        self.evaluation_metrics["loss_type"] = "symmetric"
-        self.evaluation_metrics["feature_importances"] = self.feature_importances or []
+        self.evaluation_metrics["model_name"] = "Quantile Regression (Pinball tau=0.85)"
+        self.evaluation_metrics["model_type"] = "quantile"
+        self.evaluation_metrics["loss_type"] = "asymmetric"
+        if self.weights is not None:
+            self.evaluation_metrics["weights"] = [round(float(w), 4) for w in self.weights]
+        if self.intercept is not None:
+            self.evaluation_metrics["intercept"] = round(float(self.intercept), 4)
         return self.evaluation_metrics
 
 
-class SVRRegressionModel:
+class ExpectileRegressionModel:
     """
-    Support Vector Regression with Radial Basis Function (RBF) Kernel.
-    Uses standard symmetric epsilon-insensitive loss:
-    L_eps(e) = 0 if |e| <= eps, else |e| - eps
+    Expectile Regression / Asymmetric Least Squares (p = 0.85).
+    L_p(y, y_hat) = |p - I(y < y_hat)| * (y - y_hat)^2
 
     Docstring & Purpose:
-    Uses a strictly SYMMETRIC epsilon-tube where deficits and surpluses outside
-    the corridor are penalized identically. Included to demonstrate that kernelization
-    and margin maximization fail to address the directional cost asymmetry of cloud SLAs.
+    Standard academic ASYMMETRIC quadratic loss benchmark (Newey & Powell 1987).
+    Fitted via Iteratively Reweighted Least Squares (IRLS) in pure NumPy.
+    Limitation vs Proposed Model:
+    Quadratically penalizes over-provisioning as well, causing severe resource wastage
+    and excessive cloud billing costs, unlike our model's controlled linear wastage term.
     """
-    def __init__(self, kernel: str = 'rbf', C: float = 1.0, epsilon: float = 0.5):
-        self.kernel = kernel
-        self.C = float(C)
-        self.epsilon = float(epsilon)
-        self.model = SVR(kernel=self.kernel, C=self.C, epsilon=self.epsilon)
+    def __init__(self, p: float = 0.85, max_iter: int = 30, tol: float = 1e-5):
+        self.p = float(p)
+        self.max_iter = int(max_iter)
+        self.tol = float(tol)
+        self.weights: Optional[List[float]] = None
+        self.intercept: Optional[float] = None
+        self.coef_: Optional[np.ndarray] = None
         self.is_trained: bool = False
         self.evaluation_metrics: Dict[str, Any] = {}
 
-    def fit(self, X_train: np.ndarray, y_train: np.ndarray) -> "SVRRegressionModel":
-        self.model.fit(X_train, y_train)
+    def fit(self, X_train: np.ndarray, y_train: np.ndarray) -> "ExpectileRegressionModel":
+        n_samples, n_features = X_train.shape
+        X_aug = np.hstack([X_train, np.ones((n_samples, 1))])
+        
+        # Initial estimate with standard OLS
+        w_aug = np.linalg.lstsq(X_aug, y_train, rcond=None)[0]
+        
+        for _ in range(self.max_iter):
+            y_hat = X_aug @ w_aug
+            residuals = y_train - y_hat
+            weights = np.where(residuals >= 0, self.p, 1.0 - self.p)
+            W_sqrt = np.sqrt(weights)
+            
+            X_weighted = X_aug * W_sqrt[:, None]
+            y_weighted = y_train * W_sqrt
+            w_new = np.linalg.lstsq(X_weighted, y_weighted, rcond=None)[0]
+            
+            if np.max(np.abs(w_new - w_aug)) < self.tol:
+                w_aug = w_new
+                break
+            w_aug = w_new
+
+        self.coef_ = w_aug[:-1]
+        self.intercept = float(w_aug[-1])
+        self.weights = self.coef_.tolist()
         self.is_trained = True
         return self
 
     def predict(self, X: np.ndarray) -> np.ndarray:
-        if not self.is_trained:
-            raise RuntimeError("SVR model has not been trained yet.")
-        return self.model.predict(X)
+        if not self.is_trained or self.coef_ is None or self.intercept is None:
+            raise RuntimeError("Expectile model has not been trained yet.")
+        return X @ self.coef_ + self.intercept
 
     def evaluate(self, X_test: np.ndarray, y_test: np.ndarray) -> Dict[str, Any]:
         y_pred = self.predict(X_test)
         self.evaluation_metrics = compute_all_metrics(y_test, y_pred)
-        self.evaluation_metrics["model_name"] = "Support Vector Regression (RBF Kernel)"
-        self.evaluation_metrics["model_type"] = "svr"
-        self.evaluation_metrics["loss_type"] = "symmetric"
+        self.evaluation_metrics["model_name"] = "Expectile Regression (Asym L2 p=0.85)"
+        self.evaluation_metrics["model_type"] = "expectile"
+        self.evaluation_metrics["loss_type"] = "asymmetric"
+        if self.weights is not None:
+            self.evaluation_metrics["weights"] = [round(float(w), 4) for w in self.weights]
+        if self.intercept is not None:
+            self.evaluation_metrics["intercept"] = round(float(self.intercept), 4)
         return self.evaluation_metrics

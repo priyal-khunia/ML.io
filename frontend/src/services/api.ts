@@ -5,6 +5,9 @@ import {
   PredictResponse,
   TrainRequest,
   PredictionLog,
+  NoveltyResponse,
+  CodeProofResponse,
+  CodeSimulationResponse,
 } from '../types/api';
 
 const API_BASE_URL = 'http://127.0.0.1:8000';
@@ -83,6 +86,31 @@ export async function addDatasetRow(data: {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
+  });
+  return handleResponse(res);
+}
+
+export async function fetchNovelty(): Promise<NoveltyResponse> {
+  const res = await fetch(`${API_BASE_URL}/novelty`);
+  return handleResponse(res);
+}
+
+export async function fetchCodeProof(): Promise<CodeProofResponse> {
+  const res = await fetch(`${API_BASE_URL}/code-proof`);
+  return handleResponse(res);
+}
+
+export async function simulateCodeProof(params: {
+  error: number;
+  alpha?: number;
+  beta?: number;
+  gamma?: number;
+  tau?: number;
+}): Promise<CodeSimulationResponse> {
+  const res = await fetch(`${API_BASE_URL}/code-proof/simulate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
   });
   return handleResponse(res);
 }

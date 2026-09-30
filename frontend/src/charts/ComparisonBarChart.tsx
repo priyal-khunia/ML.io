@@ -83,17 +83,17 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* SLA Violations Comparison */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h4 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
               SLA Violation Rate
             </h4>
-            <p className="text-xs text-[#6B7280]">
+            <p className="text-xs text-[#64748B]">
               Lower is critical for cloud cluster SLA compliance
             </p>
           </div>
-          <span className="text-xs font-mono font-bold text-[#6C63FF] bg-[#6C63FF]/10 border border-[#6C63FF]/25 px-2.5 py-1 rounded-lg">
+          <span className="text-xs font-mono font-bold text-blue-700 bg-blue-50 border border-blue-200 px-2.5 py-1 rounded-md">
             -{slaReductionVsWorst}% Reduction
           </span>
         </div>
@@ -104,10 +104,10 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
               barGap={8}
               margin={{ top: 10, right: 10, left: -20, bottom: 25 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
               <XAxis
                 dataKey="name"
-                stroke="#6B7280"
+                stroke="#64748B"
                 fontSize={10}
                 tickLine={false}
                 interval={0}
@@ -116,7 +116,7 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
                 height={45}
               />
               <YAxis
-                stroke="#6B7280"
+                stroke="#64748B"
                 fontSize={11}
                 tickLine={false}
                 unit="%"
@@ -126,10 +126,10 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
                 filterNull={true}
                 contentStyle={{
                   backgroundColor: '#FFFFFF',
-                  borderColor: '#E5E7EB',
-                  borderRadius: '8px',
-                  color: '#252936',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                  borderColor: '#E2E8F0',
+                  borderRadius: '6px',
+                  color: '#0F172A',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
                   fontSize: '12px',
                 }}
                 formatter={(val: any, name: any) => {
@@ -145,8 +145,8 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
                     name={m.model_name || getShortDisplayName(m.model_name, m.model_type)}
                     dataKey={m.model_type}
                     stackId="a"
-                    fill={isAsym ? '#6C63FF' : '#94A3B8'}
-                    radius={[4, 4, 0, 0]}
+                    fill={isAsym ? '#2563EB' : '#94A3B8'}
+                    radius={[3, 3, 0, 0]}
                     barSize={32}
                   />
                 );
@@ -157,17 +157,17 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
       </div>
 
       {/* Resource Wastage Comparison */}
-      <div className="bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+      <div className="bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h4 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
+            <h4 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
               Resource Wastage Index
             </h4>
-            <p className="text-xs text-[#6B7280]">
+            <p className="text-xs text-[#64748B]">
               Excess headroom buffer provisioned above demand
             </p>
           </div>
-          <span className="text-xs font-mono font-bold text-[#E7A83B] bg-[#E7A83B]/10 border border-[#E7A83B]/25 px-2.5 py-1 rounded-lg">
+          <span className="text-xs font-mono font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-1 rounded-md">
             +{wastageGapVsWorst} Controlled Cost
           </span>
         </div>
@@ -178,10 +178,10 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
               barGap={8}
               margin={{ top: 10, right: 10, left: -20, bottom: 25 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
               <XAxis
                 dataKey="name"
-                stroke="#6B7280"
+                stroke="#64748B"
                 fontSize={10}
                 tickLine={false}
                 interval={0}
@@ -189,15 +189,15 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
                 textAnchor="end"
                 height={45}
               />
-              <YAxis stroke="#6B7280" fontSize={11} tickLine={false} domain={[0, 'auto']} />
+              <YAxis stroke="#64748B" fontSize={11} tickLine={false} domain={[0, 'auto']} />
               <Tooltip
                 filterNull={true}
                 contentStyle={{
                   backgroundColor: '#FFFFFF',
-                  borderColor: '#E5E7EB',
-                  borderRadius: '8px',
-                  color: '#252936',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
+                  borderColor: '#E2E8F0',
+                  borderRadius: '6px',
+                  color: '#0F172A',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.06)',
                   fontSize: '12px',
                 }}
                 formatter={(val: any, name: any) => {
@@ -213,8 +213,8 @@ export const ComparisonBarChart: React.FC<ComparisonBarChartProps> = ({ models }
                     name={m.model_name || getShortDisplayName(m.model_name, m.model_type)}
                     dataKey={m.model_type}
                     stackId="a"
-                    fill={isAsym ? '#6C63FF' : '#94A3B8'}
-                    radius={[4, 4, 0, 0]}
+                    fill={isAsym ? '#2563EB' : '#94A3B8'}
+                    radius={[3, 3, 0, 0]}
                     barSize={32}
                   />
                 );

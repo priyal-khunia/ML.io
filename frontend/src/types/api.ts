@@ -3,6 +3,10 @@ export interface ModelMetrics {
   rmse: number;
   mae: number;
   r2: number;
+  accuracy?: number;
+  sla_compliance_accuracy?: number;
+  forecast_accuracy?: number;
+  operational_accuracy?: number;
   sla_violation_rate: number;
   sla_violation_count: number;
   sla_severity: number;
@@ -14,6 +18,8 @@ export interface ModelMetrics {
   model_type?: string;
   loss_type?: 'symmetric' | 'asymmetric' | string;
   asymmetric_advantage_percent?: number;
+  accuracy_advantage_points?: number;
+  accuracy_boost_percent?: number;
   weights?: number[];
   intercept?: number;
   feature_importances?: number[];
@@ -36,6 +42,8 @@ export interface ComparisonResponse {
   asymmetric: ModelMetrics;
   ridge?: ModelMetrics;
   huber?: ModelMetrics;
+  quantile?: ModelMetrics;
+  expectile?: ModelMetrics;
   random_forest?: ModelMetrics;
   svr?: ModelMetrics;
   all_models?: ModelMetrics[];
@@ -43,6 +51,8 @@ export interface ComparisonResponse {
   comparison_summary: {
     sla_violation_reduction_points: number;
     sla_violation_reduction_percent: number;
+    accuracy_advantage_points?: number;
+    accuracy_improvement_percent?: number;
     wastage_delta: number;
     mse_delta: number;
     conclusion: string;
@@ -116,4 +126,91 @@ export interface PredictionLog {
   provisioning_status: string;
   model_type: string;
   rationale?: string;
+}
+
+export interface NoveltyPillar {
+  id: string;
+  title: string;
+  subtitle: string;
+  summary: string;
+  formula?: string;
+  key_points: string[];
+}
+
+export interface NoveltyResponse {
+  title: string;
+  core_contributions: NoveltyPillar[];
+}
+
+export interface CodeSnippet {
+  id: string;
+  title: string;
+  file: string;
+  lines: string;
+  summary: string;
+  code: string;
+}
+
+export interface CodeProofScenario {
+  name: string;
+  error: number;
+  description: string;
+  asymmetric: {
+    loss: number;
+    gradient: number;
+    behavior: string;
+  };
+  symmetric_mse: {
+    loss: number;
+    gradient: number;
+    behavior: string;
+  };
+  pinball_quantile: {
+    loss: number;
+    gradient: number;
+    behavior: string;
+  };
+}
+
+export interface CodeProofResponse {
+  title: string;
+  subtitle: string;
+  gradient_verification: {
+    status: string;
+    method: string;
+    epsilon: number;
+    max_gradient_difference: number;
+    passed: boolean;
+    verdict: string;
+  };
+  model_parameters: {
+    alpha: number;
+    beta: number;
+    gamma: number;
+    clip_exp: number;
+    learned_bias: number;
+    weights: number[];
+  };
+  scenarios: CodeProofScenario[];
+  source_snippets: CodeSnippet[];
+}
+
+export interface CodeSimulationResponse {
+  error: number;
+  is_under_prediction: boolean;
+  proposed_asymmetric: {
+    loss: number;
+    gradient: number;
+    formula: string;
+  };
+  symmetric_mse: {
+    loss: number;
+    gradient: number;
+    formula: string;
+  };
+  pinball_quantile: {
+    loss: number;
+    gradient: number;
+    formula: string;
+  };
 }

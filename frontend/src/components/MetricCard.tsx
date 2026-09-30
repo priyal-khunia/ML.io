@@ -8,8 +8,8 @@ interface MetricCardProps {
   subtitle?: string;
   icon?: LucideIcon;
   badge?: string;
-  badgeColor?: 'emerald' | 'amber' | 'rose' | 'cyan' | 'slate';
-  accentColor?: 'emerald' | 'amber' | 'rose' | 'cyan' | 'slate';
+  badgeColor?: 'emerald' | 'amber' | 'rose' | 'cyan' | 'slate' | 'blue';
+  accentColor?: 'emerald' | 'amber' | 'rose' | 'cyan' | 'slate' | 'blue';
 }
 
 export const MetricCard: React.FC<MetricCardProps> = ({
@@ -19,69 +19,72 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   subtitle,
   icon: Icon,
   badge,
-  badgeColor = 'emerald',
-  accentColor = 'emerald',
+  badgeColor = 'blue',
+  accentColor = 'blue',
 }) => {
-  const accentGlow = {
-    emerald: 'group-hover:border-[#6C63FF]/50',
-    amber: 'group-hover:border-[#E7A83B]/50',
-    rose: 'group-hover:border-[#E76F6F]/50',
-    cyan: 'group-hover:border-[#5B9CF6]/50',
-    slate: 'group-hover:border-[#D1D5DB]',
-  }[accentColor] || 'group-hover:border-[#6C63FF]/50';
+  const accentBorder = {
+    blue: 'hover:border-blue-500/60',
+    emerald: 'hover:border-emerald-500/60',
+    amber: 'hover:border-amber-500/60',
+    rose: 'hover:border-rose-500/60',
+    cyan: 'hover:border-sky-500/60',
+    slate: 'hover:border-slate-400',
+  }[accentColor] || 'hover:border-blue-500/60';
 
   const badgeStyles = {
-    emerald: 'bg-[#35B99A]/15 text-[#35B99A] border-[#35B99A]/30',
-    amber: 'bg-[#E7A83B]/15 text-[#E7A83B] border-[#E7A83B]/30',
-    rose: 'bg-[#E76F6F]/15 text-[#E76F6F] border-[#E76F6F]/30',
-    cyan: 'bg-[#5B9CF6]/15 text-[#5B9CF6] border-[#5B9CF6]/30',
-    slate: 'bg-[#F3F4F6] text-[#6B7280] border-[#E5E7EB]',
-  }[badgeColor] || 'bg-[#35B99A]/15 text-[#35B99A] border-[#35B99A]/30';
+    blue: 'bg-blue-50 text-blue-700 border-blue-200',
+    emerald: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    amber: 'bg-amber-50 text-amber-800 border-amber-200',
+    rose: 'bg-rose-50 text-rose-700 border-rose-200',
+    cyan: 'bg-sky-50 text-sky-700 border-sky-200',
+    slate: 'bg-slate-100 text-slate-700 border-slate-200',
+  }[badgeColor] || 'bg-blue-50 text-blue-700 border-blue-200';
 
   const iconColor = {
-    emerald: 'text-[#6C63FF] bg-[#6C63FF]/10 border-[#6C63FF]/20',
-    amber: 'text-[#E7A83B] bg-[#E7A83B]/10 border-[#E7A83B]/20',
-    rose: 'text-[#E76F6F] bg-[#E76F6F]/10 border-[#E76F6F]/20',
-    cyan: 'text-[#5B9CF6] bg-[#5B9CF6]/10 border-[#5B9CF6]/20',
-    slate: 'text-[#6B7280] bg-[#F3F4F6] border-[#E5E7EB]',
-  }[accentColor] || 'text-[#6C63FF] bg-[#6C63FF]/10 border-[#6C63FF]/20';
+    blue: 'text-blue-600 bg-blue-50 border-blue-200',
+    emerald: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+    amber: 'text-amber-600 bg-amber-50 border-amber-200',
+    rose: 'text-rose-600 bg-rose-50 border-rose-200',
+    cyan: 'text-sky-600 bg-sky-50 border-sky-200',
+    slate: 'text-slate-600 bg-slate-100 border-slate-200',
+  }[accentColor] || 'text-blue-600 bg-blue-50 border-blue-200';
 
   return (
     <div
-      className={`relative group overflow-hidden bg-white border border-[#E5E7EB] rounded-2xl p-5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-md transition-all duration-200 ${accentGlow}`}
+      className={`relative group bg-white border border-[#E2E8F0] rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)] transition-colors duration-150 ${accentBorder}`}
     >
       <div className="flex items-center justify-between gap-3 mb-2.5">
-        <span className="text-xs font-semibold tracking-wider text-[#6B7280] uppercase">
+        <span className="text-xs font-semibold tracking-wider text-[#64748B] uppercase">
           {title}
         </span>
         {Icon && (
-          <div className={`p-2 rounded-xl border ${iconColor}`}>
+          <div className={`p-2 rounded-lg border ${iconColor}`}>
             <Icon className="w-4 h-4" />
           </div>
         )}
       </div>
 
       <div className="flex items-baseline gap-1.5 mt-1">
-        <span className="text-2xl font-bold tracking-tight text-[#252936] font-mono">
+        <span className="text-2xl font-bold tracking-tight text-[#0F172A] font-mono">
           {value}
         </span>
         {unit && (
-          <span className="text-sm font-medium text-[#6B7280]">
+          <span className="text-sm font-medium text-[#64748B]">
             {unit}
           </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-[#E5E7EB]">
+      <div className="flex items-center justify-between gap-2 mt-3 pt-3 border-t border-[#F1F5F9]">
         {subtitle ? (
-          <span className="text-xs text-[#6B7280] truncate">
+          <span className="text-xs text-[#64748B] truncate">
             {subtitle}
           </span>
         ) : (
           <span />
         )}
         {badge && (
-          <span className={`text-[11px] font-medium px-2 py-0.5 rounded-full border shrink-0 ${badgeStyles}`}>
+          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-md border shrink-0 ${badgeStyles}`}>
             {badge}
           </span>
         )}

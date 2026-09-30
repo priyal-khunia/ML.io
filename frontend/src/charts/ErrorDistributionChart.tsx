@@ -49,8 +49,8 @@ export const ErrorDistributionChart: React.FC<ErrorDistributionChartProps> = ({ 
               formatter={(val: any, name: any) => [`${val} samples (${((Number(val) / baseline.total_samples) * 100).toFixed(1)}%)`, name]}
             />
             <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
-            <Bar dataKey="Baseline OLS" fill="#94A3B8" radius={[4, 4, 0, 0]} barSize={45} />
-            <Bar dataKey="Asymmetric Model" fill="#6C63FF" radius={[4, 4, 0, 0]} barSize={45} />
+            <Bar dataKey="Baseline OLS" fill="#94A3B8" radius={[3, 3, 0, 0]} barSize={45} />
+            <Bar dataKey="Asymmetric Model" fill="#2563EB" radius={[3, 3, 0, 0]} barSize={45} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -14,35 +14,35 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({ action, size = 'md', s
 
   switch (action) {
     case 'SCALE_UP':
-      colorClasses = 'bg-[#E76F6F]/15 text-[#E76F6F] border-[#E76F6F]/30';
+      colorClasses = 'bg-rose-50 text-rose-700 border-rose-200';
       Icon = ArrowUpRight;
       label = 'SCALE UP';
       break;
     case 'SCALE_DOWN':
-      colorClasses = 'bg-[#5B9CF6]/15 text-[#5B9CF6] border-[#5B9CF6]/30';
+      colorClasses = 'bg-sky-50 text-sky-700 border-sky-200';
       Icon = ArrowDownRight;
       label = 'SCALE DOWN';
       break;
     case 'MAINTAIN':
-      colorClasses = 'bg-[#35B99A]/15 text-[#35B99A] border-[#35B99A]/30';
+      colorClasses = 'bg-emerald-50 text-emerald-700 border-emerald-200';
       Icon = CheckCircle2;
       label = 'MAINTAIN';
       break;
     default:
-      colorClasses = 'bg-[#E7A83B]/15 text-[#E7A83B] border-[#E7A83B]/30';
+      colorClasses = 'bg-amber-50 text-amber-700 border-amber-200';
       Icon = AlertTriangle;
       label = action;
   }
 
   const sizeClasses = {
     sm: 'text-xs px-2 py-0.5 gap-1',
-    md: 'text-sm px-3 py-1 gap-1.5 font-semibold',
-    lg: 'text-base px-4 py-2 gap-2 font-bold tracking-wide'
+    md: 'text-xs px-2.5 py-1 gap-1.5 font-semibold',
+    lg: 'text-sm px-3.5 py-1.5 gap-2 font-bold tracking-wide'
   }[size];
 
   return (
-    <span className={`inline-flex items-center rounded-full border shadow-sm ${colorClasses} ${sizeClasses}`}>
-      {showIcon && <Icon className={size === 'lg' ? 'w-5 h-5' : size === 'sm' ? 'w-3 h-3' : 'w-4 h-4'} />}
+    <span className={`inline-flex items-center rounded-md border font-mono ${colorClasses} ${sizeClasses}`}>
+      {showIcon && <Icon className={size === 'lg' ? 'w-4 h-4' : size === 'sm' ? 'w-3 h-3' : 'w-3.5 h-3.5'} />}
       <span>{label}</span>
     </span>
   );

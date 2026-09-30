@@ -40,11 +40,26 @@ def compute_all_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, Any
     mae = float(mean_absolute_error(y_true, y_pred))
     r2 = float(r2_score(y_true, y_pred))
     
+    # Accuracy Metrics:
+    # 1. SLA Compliance Accuracy: % of intervals that successfully meet or exceed capacity demands without SLA starvation
+    sla_compliance_accuracy = float(100.0 - under_rate)
+    
+    # 2. Forecast Percentage Accuracy (100% - MAPE)
+    mape = float(np.mean(np.abs(errors / np.maximum(1.0, np.abs(y_true))))) * 100.0
+    forecast_accuracy = float(max(0.0, 100.0 - mape))
+    
+    # 3. Composite Operational Accuracy (Penalizing outages heavily and wastage linearly)
+    operational_accuracy = float(max(0.0, 100.0 - (under_rate * 0.85 + wastage_index * 4.0)))
+
     return {
         "mse": round(mse, 4),
         "rmse": round(rmse, 4),
         "mae": round(mae, 4),
         "r2": round(r2, 4),
+        "accuracy": round(sla_compliance_accuracy, 2),
+        "sla_compliance_accuracy": round(sla_compliance_accuracy, 2),
+        "forecast_accuracy": round(forecast_accuracy, 2),
+        "operational_accuracy": round(operational_accuracy, 2),
         "sla_violation_rate": round(under_rate, 2),
         "sla_violation_count": under_count,
         "sla_severity": round(sla_severity, 4),

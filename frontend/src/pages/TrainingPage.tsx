@@ -7,7 +7,6 @@ import {
   TrendingDown,
   AlertCircle,
   Sliders,
-  Sparkles,
   Layers,
 } from 'lucide-react';
 import { LossChart } from '../charts/LossChart';
@@ -73,24 +72,24 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
   const asym = comparison?.asymmetric;
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <div className="flex items-center gap-2 text-[#6C63FF] text-xs font-bold uppercase tracking-wider mb-1">
+        <div className="flex items-center gap-2 text-blue-700 text-xs font-bold uppercase tracking-wider mb-1">
           <BrainCircuit className="w-4 h-4" />
-          Mathematical Optimization Engine
+          <span>Analytical Optimization Engine</span>
         </div>
-        <h2 className="text-xl sm:text-2xl font-extrabold text-[#252936] tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-extrabold text-[#0F172A] tracking-tight">
           Custom Gradient Descent Training Lab
         </h2>
-        <p className="text-sm text-[#6B7280] max-w-3xl mt-1">
-          Configure cost hyperparameters and run gradient descent optimization across 1,793 chronological training samples.
+        <p className="text-xs sm:text-sm text-[#64748B] max-w-3xl mt-1">
+          Configure cost hyperparameters and run analytical gradient descent optimization across 1,793 chronological training samples.
         </p>
       </div>
 
       {/* Preset Profiles */}
       <div>
-        <span className="text-xs font-semibold text-[#6B7280] uppercase tracking-wider block mb-2.5">
+        <span className="text-xs font-semibold text-[#64748B] uppercase tracking-wider block mb-2.5">
           Hyperparameter Configuration Presets:
         </span>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -99,17 +98,17 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
               key={preset.name}
               type="button"
               onClick={() => setParams(preset.values)}
-              className="text-left p-3.5 rounded-xl bg-white border border-[#E5E7EB] hover:border-[#6C63FF]/50 hover:bg-[#F7F8FC] transition-all group"
+              className="text-left p-3.5 rounded-lg bg-white border border-[#E2E8F0] hover:border-blue-400 hover:bg-[#F8FAFC] transition-colors group"
             >
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#252936] group-hover:text-[#6C63FF]">
+                <span className="text-xs font-bold text-[#0F172A] group-hover:text-blue-600">
                   {preset.name}
                 </span>
-                <span className="text-[10px] font-mono text-[#6B7280]">
-                  α={preset.values.alpha}, β={preset.values.beta}
+                <span className="text-[10px] font-mono text-[#64748B] bg-slate-100 px-1.5 py-0.5 rounded">
+                  β={preset.values.beta}
                 </span>
               </div>
-              <p className="text-[11px] text-[#6B7280] mt-1">
+              <p className="text-[11px] text-[#64748B] mt-1">
                 {preset.desc}
               </p>
             </button>
@@ -119,13 +118,13 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Hyperparameter Form */}
-        <div className="lg:col-span-5 bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-6">
-          <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
-            <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
+        <div className="lg:col-span-5 bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-6">
+          <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+            <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
               Asymmetric Cost Hyperparameters
             </h3>
-            <span className="text-xs font-mono text-[#6C63FF] bg-[#6C63FF]/10 px-2 py-0.5 rounded border border-[#6C63FF]/20">
-              Active Status
+            <span className="text-xs font-mono text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
+              Active Parameters
             </span>
           </div>
 
@@ -133,10 +132,10 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
             {/* Alpha (Under-prediction scale) */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="font-semibold text-[#252936]">
-                  Alpha (α) — Under-prediction Scale Factor
+                <label className="font-semibold text-[#0F172A]">
+                  Alpha (α): Under-prediction Scale Factor
                 </label>
-                <span className="font-mono text-[#6C63FF] font-bold">{params.alpha}</span>
+                <span className="font-mono text-blue-600 font-bold">{params.alpha}</span>
               </div>
               <input
                 type="range"
@@ -145,20 +144,20 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
                 step="0.1"
                 value={params.alpha}
                 onChange={(e) => setParams({ ...params, alpha: parseFloat(e.target.value) || 0.1 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#6C63FF]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-blue-600"
               />
-              <p className="text-[10px] text-[#6B7280]">
-                Magnifies the overall scale of under-provisioning penalty.
+              <p className="text-[10px] text-[#64748B]">
+                Scales the amplitude of under-provisioning penalty.
               </p>
             </div>
 
             {/* Beta (Exponential sensitivity) */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="font-semibold text-[#252936]">
-                  Beta (β) — Exponential SLA Sensitivity
+                <label className="font-semibold text-[#0F172A]">
+                  Beta (β): Exponential SLA Sensitivity
                 </label>
-                <span className="font-mono text-[#E76F6F] font-bold">{params.beta}</span>
+                <span className="font-mono text-rose-600 font-bold">{params.beta}</span>
               </div>
               <input
                 type="range"
@@ -167,20 +166,20 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
                 step="0.1"
                 value={params.beta}
                 onChange={(e) => setParams({ ...params, beta: parseFloat(e.target.value) || 0.2 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#E76F6F]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-rose-600"
               />
-              <p className="text-[10px] text-[#6B7280]">
-                Controls how aggressively penalty increases as deficit grows: $e^{`\\beta |e|`}$.
+              <p className="text-[10px] text-[#64748B]">
+                Deficit growth rate exponent: exp(β · |e|).
               </p>
             </div>
 
             {/* Gamma (Linear over-prediction weight) */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <label className="font-semibold text-[#252936]">
-                  Gamma (γ) — Over-prediction Wastage Weight
+                <label className="font-semibold text-[#0F172A]">
+                  Gamma (γ): Over-prediction Wastage Weight
                 </label>
-                <span className="font-mono text-[#E7A83B] font-bold">{params.gamma}</span>
+                <span className="font-mono text-amber-700 font-bold">{params.gamma}</span>
               </div>
               <input
                 type="range"
@@ -189,17 +188,17 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
                 step="0.05"
                 value={params.gamma}
                 onChange={(e) => setParams({ ...params, gamma: parseFloat(e.target.value) || 0.1 })}
-                className="w-full h-2 bg-[#E5E7EB] rounded-lg appearance-none cursor-pointer accent-[#E7A83B]"
+                className="w-full h-2 bg-[#E2E8F0] rounded-md appearance-none cursor-pointer accent-amber-600"
               />
-              <p className="text-[10px] text-[#6B7280]">
-                Linear penalty weight on unused cloud headroom: $\gamma |e|$.
+              <p className="text-[10px] text-[#64748B]">
+                Linear cost rate on unused cloud headroom: γ · |e|.
               </p>
             </div>
 
             {/* Learning Rate & Epochs */}
-            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#E5E7EB]">
+            <div className="grid grid-cols-2 gap-4 pt-2 border-t border-[#E2E8F0]">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#252936]">
+                <label className="text-xs font-semibold text-[#0F172A]">
                   Learning Rate (η)
                 </label>
                 <input
@@ -209,12 +208,12 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
                   max="0.1"
                   value={params.learning_rate}
                   onChange={(e) => setParams({ ...params, learning_rate: parseFloat(e.target.value) || 0.005 })}
-                  className="w-full px-3 py-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+                  className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-[#252936]">
+                <label className="text-xs font-semibold text-[#0F172A]">
                   Epochs
                 </label>
                 <input
@@ -224,7 +223,7 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
                   max="2000"
                   value={params.epochs}
                   onChange={(e) => setParams({ ...params, epochs: parseInt(e.target.value, 10) || 100 })}
-                  className="w-full px-3 py-2 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-xs font-mono text-[#252936] focus:outline-none focus:border-[#6C63FF]"
+                  className="w-full px-3 py-2 bg-[#F8FAFC] border border-[#CBD5E1] rounded-md text-xs font-mono text-[#0F172A] focus:outline-none focus:border-blue-600"
                 />
               </div>
             </div>
@@ -234,7 +233,7 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
               type="submit"
               disabled={isTraining}
               id="train-btn"
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-[#6C63FF] hover:bg-[#5A52E0] text-white font-bold text-xs uppercase tracking-wider shadow-sm transition-all disabled:opacity-50"
+              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs uppercase tracking-wider transition-colors disabled:opacity-50"
             >
               <Play className={`w-4 h-4 ${isTraining ? 'animate-spin' : ''}`} />
               <span>{isTraining ? 'Running Gradient Descent Optimization...' : 'TRAIN ASYMMETRIC MODEL'}</span>
@@ -242,14 +241,14 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
           </form>
 
           {successMsg && (
-            <div className="p-3 bg-[#35B99A]/10 border border-[#35B99A]/30 rounded-xl text-[#35B99A] text-xs flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
+            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-md text-emerald-800 text-xs flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600" />
               <span>{successMsg}</span>
             </div>
           )}
 
           {errorMsg && (
-            <div className="p-3 bg-[#E76F6F]/10 border border-[#E76F6F]/30 rounded-xl text-[#E76F6F] text-xs flex items-center gap-2">
+            <div className="p-3 bg-rose-50 border border-rose-200 rounded-md text-rose-700 text-xs flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{errorMsg}</span>
             </div>
@@ -258,9 +257,9 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
 
         {/* Training Loss Curve & Convergence Results */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="bg-white border border-[#E5E7EB] rounded-2xl p-6 shadow-[0_2px_8px_rgba(0,0,0,0.04)] space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#E5E7EB]">
-              <h3 className="text-sm font-bold text-[#252936] uppercase tracking-wider">
+          <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.05)] space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#E2E8F0]">
+              <h3 className="text-sm font-bold text-[#0F172A] uppercase tracking-wider">
                 Empirical Training Loss Trajectory
               </h3>
             </div>
@@ -271,42 +270,42 @@ export const TrainingPage: React.FC<TrainingPageProps> = ({
           {/* Test Performance After Training */}
           {asym && (
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-xs text-[#6B7280] block mb-1">Test SLA Violations</span>
-                <span className="text-xl font-bold font-mono text-[#6C63FF]">
+              <div className="p-4 bg-white border border-[#E2E8F0] rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                <span className="text-xs text-[#64748B] block mb-1">Test SLA Violations</span>
+                <span className="text-xl font-bold font-mono text-blue-600">
                   {asym.sla_violation_rate.toFixed(2)}%
                 </span>
-                <span className="text-[10px] text-[#6B7280] block mt-0.5">
+                <span className="text-[10px] text-[#64748B] block mt-0.5">
                   ({asym.sla_violation_count} / {asym.total_samples} intervals)
                 </span>
               </div>
 
-              <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-xs text-[#6B7280] block mb-1">Resource Wastage</span>
-                <span className="text-xl font-bold font-mono text-[#E7A83B]">
+              <div className="p-4 bg-white border border-[#E2E8F0] rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                <span className="text-xs text-[#64748B] block mb-1">Resource Wastage</span>
+                <span className="text-xl font-bold font-mono text-amber-700">
                   {asym.resource_wastage_index.toFixed(3)}
                 </span>
-                <span className="text-[10px] text-[#6B7280] block mt-0.5">
+                <span className="text-[10px] text-[#64748B] block mt-0.5">
                   Average excess units
                 </span>
               </div>
 
-              <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-xs text-[#6B7280] block mb-1">Model Intercept ($b$)</span>
-                <span className="text-xl font-bold font-mono text-[#252936]">
+              <div className="p-4 bg-white border border-[#E2E8F0] rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                <span className="text-xs text-[#64748B] block mb-1">Model Intercept (b)</span>
+                <span className="text-xl font-bold font-mono text-[#0F172A]">
                   {asym.intercept?.toFixed(2) ?? '--'}
                 </span>
-                <span className="text-[10px] text-[#6B7280] block mt-0.5">
+                <span className="text-[10px] text-[#64748B] block mt-0.5">
                   Learned safety offset
                 </span>
               </div>
 
-              <div className="p-4 bg-white border border-[#E5E7EB] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
-                <span className="text-xs text-[#6B7280] block mb-1">Test Set MSE</span>
-                <span className="text-xl font-bold font-mono text-[#252936]">
+              <div className="p-4 bg-white border border-[#E2E8F0] rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.05)]">
+                <span className="text-xs text-[#64748B] block mb-1">Test Set MSE</span>
+                <span className="text-xl font-bold font-mono text-[#0F172A]">
                   {asym.mse.toFixed(3)}
                 </span>
-                <span className="text-[10px] text-[#6B7280] block mt-0.5">
+                <span className="text-[10px] text-[#64748B] block mt-0.5">
                   RMSE: {asym.rmse.toFixed(3)}
                 </span>
               </div>

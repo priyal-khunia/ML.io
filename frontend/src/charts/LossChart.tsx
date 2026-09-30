@@ -17,7 +17,7 @@ interface LossChartProps {
 export const LossChart: React.FC<LossChartProps> = ({ data }) => {
   if (!data || data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-[#6B7280] text-sm">
+      <div className="h-64 flex items-center justify-center text-[#64748B] text-sm">
         No training history available. Train the model to generate loss trajectory.
       </div>
     );
@@ -30,11 +30,11 @@ export const LossChart: React.FC<LossChartProps> = ({ data }) => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between mb-3 text-xs">
-        <div className="flex items-center gap-4 text-[#6B7280]">
-          <span>Initial Loss: <strong className="text-[#252936] font-mono">{initialLoss.toFixed(4)}</strong></span>
-          <span>Final Loss: <strong className="text-[#6C63FF] font-mono">{finalLoss.toFixed(4)}</strong></span>
+        <div className="flex items-center gap-4 text-[#64748B]">
+          <span>Initial Loss: <strong className="text-[#0F172A] font-mono">{initialLoss.toFixed(4)}</strong></span>
+          <span>Final Loss: <strong className="text-blue-600 font-mono">{finalLoss.toFixed(4)}</strong></span>
         </div>
-        <span className="bg-[#6C63FF]/10 text-[#6C63FF] border border-[#6C63FF]/20 px-2 py-0.5 rounded text-[11px] font-semibold">
+        <span className="bg-blue-50 text-blue-700 border border-blue-200 px-2.5 py-0.5 rounded-md text-[11px] font-semibold font-mono">
           -{reduction}% Loss Convergence
         </span>
       </div>
@@ -44,20 +44,20 @@ export const LossChart: React.FC<LossChartProps> = ({ data }) => {
           <AreaChart data={data} margin={{ top: 10, right: 20, left: 0, bottom: 0 }}>
             <defs>
               <linearGradient id="lossGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6C63FF" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#6C63FF" stopOpacity={0.0} />
+                <stop offset="5%" stopColor="#2563EB" stopOpacity={0.2} />
+                <stop offset="95%" stopColor="#2563EB" stopOpacity={0.0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
             <XAxis
               dataKey="epoch"
-              stroke="#6B7280"
+              stroke="#64748B"
               fontSize={11}
               tickLine={false}
               tickFormatter={(v) => `Ep ${v}`}
             />
             <YAxis
-              stroke="#6B7280"
+              stroke="#64748B"
               fontSize={11}
               tickLine={false}
               axisLine={false}
@@ -66,11 +66,11 @@ export const LossChart: React.FC<LossChartProps> = ({ data }) => {
             <Tooltip
               contentStyle={{
                 backgroundColor: '#FFFFFF',
-                borderColor: '#E5E7EB',
-                borderRadius: '8px',
-                color: '#252936',
+                borderColor: '#E2E8F0',
+                borderRadius: '6px',
+                color: '#0F172A',
                 fontSize: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
               }}
               labelFormatter={(label) => `Epoch ${label}`}
               formatter={(value: any) => [`${Number(value).toFixed(4)}`, 'Asymmetric Loss']}
@@ -78,8 +78,8 @@ export const LossChart: React.FC<LossChartProps> = ({ data }) => {
             <Area
               type="monotone"
               dataKey="loss"
-              stroke="#6C63FF"
-              strokeWidth={2.5}
+              stroke="#2563EB"
+              strokeWidth={2}
               fillOpacity={1}
               fill="url(#lossGradient)"
             />
