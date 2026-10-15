@@ -7,8 +7,8 @@ from backend.ml.asymmetric_model import AsymmetricCostRegressionModel
 from backend.ml.comparison_models import (
     RidgeRegressionModel,
     HuberRegressionModel,
-    RandomForestRegressionModel,
-    SVRRegressionModel,
+    QuantileRegressionModel,
+    ExpectileRegressionModel,
 )
 from backend.ml.metrics import compute_all_metrics
 from backend.ml.scaling import determine_scaling_action
@@ -118,24 +118,25 @@ def test_huber_regression_model():
     assert "weights" in metrics
     assert "intercept" in metrics
 
-def test_random_forest_regression_model():
+def test_quantile_regression_model():
     processor = DataProcessor()
     X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
-    model = RandomForestRegressionModel(n_estimators=50, max_depth=6, random_state=42).fit(X_train, y_train)
+    model = QuantileRegressionModel(quantile=0.85).fit(X_train, y_train)
     metrics = model.evaluate(X_test, y_test)
     for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
-        assert key in metrics, f"Missing key {key} in Random Forest metrics"
-    assert metrics["model_type"] == "random_forest"
-    assert "feature_importances" in metrics
-    assert len(metrics["feature_importances"]) == 5
+        assert key in metrics, f"Missing key {key} in Quantile metrics"
+    assert metrics["model_type"] == "quantile"
+    assert "weights" in metrics
+    assert "intercept" in metrics
 
-def test_svr_regression_model():
+def test_expectile_regression_model():
     processor = DataProcessor()
     X_train, X_test, y_train, y_test = processor.prepare_train_test_split(0.8)
-    model = SVRRegressionModel(kernel='rbf', C=1.0, epsilon=0.5).fit(X_train, y_train)
+    model = ExpectileRegressionModel(p=0.85).fit(X_train, y_train)
     metrics = model.evaluate(X_test, y_test)
     for key in ["mse", "sla_violation_rate", "resource_wastage_index", "model_name", "model_type"]:
-        assert key in metrics, f"Missing key {key} in SVR metrics"
-    assert metrics["model_type"] == "svr"
-    assert "weights" not in metrics
+        assert key in metrics, f"Missing key {key} in Expectile metrics"
+    assert metrics["model_type"] == "expectile"
+    assert "weights" in metrics
+    assert "intercept" in metrics
 
